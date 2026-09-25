@@ -75,15 +75,20 @@ Or a plain button: <AmazonButton query="immersion blender" />
 
 **Honesty:** you don't own the products, so write buying advice as research ("based on specs and owner feedback"), not "we tested". This protects you with the FTC and with Google.
 
-## Deploying to blenderhacks.com (GitHub Pages, free)
+## Deploying to blenderhacks.com (Cloudflare Pages)
 
-1. Merge this work into the `main` branch.
-2. On GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. Push to `main`. The workflow in `.github/workflows/deploy.yml` builds and publishes the site.
-4. At your domain registrar, add DNS records:
-   - `A` records for `@` → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   - `CNAME` record for `www` → `asknimesh88.github.io`
-5. Back in **Settings → Pages**, enter `blenderhacks.com` as the custom domain and tick **Enforce HTTPS** once it's available.
+The site is hosted on Cloudflare Pages, connected to this GitHub repo. Every push to the production branch rebuilds and republishes it.
+
+Build settings (Workers & Pages → blenderhacks → Settings → Build):
+
+| Setting | Value |
+|---|---|
+| Framework preset | Astro |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Node version | from `.node-version` (22) |
+
+The custom domain is set under **Custom domains**. It should show `blenderhacks.com` as **Active**. Add `www.blenderhacks.com` there too.
 
 ## Before launch checklist
 
