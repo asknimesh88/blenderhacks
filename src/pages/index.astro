@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPosts } from '../lib/posts';
+import { SITE } from '../config';
+const posts = (await getPosts()).slice(0, 6);
+---
+<Base title={SITE.name} description={SITE.description}>
+  <section class="hero">
+    <div class="wrap wide">
+      <h1>Get more out of your blender.</h1>
+      <p class="sub">{SITE.tagline} Smoother smoothies, faster cleanup, and no-nonsense help picking the right machine.</p>
+      <a class="btn" href="/blog/">Read the latest tips</a>
+    </div>
+  </section>
+  <div class="wrap wide">
+    <h2>Latest articles</h2>
+    <div class="grid">{posts.map((post) => <PostCard post={post} />)}</div>
+  </div>
+</Base>
+<style>
+  .hero { padding: 1.5rem 0 2rem; }
+  .sub { font-size: 1.15rem; color: var(--muted); max-width: 36rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1.25rem; }
+</style>

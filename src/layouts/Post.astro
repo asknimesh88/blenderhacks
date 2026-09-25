@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from './Base.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE, AMAZON_DISCLOSURE } from '../config';
+
+interface Props { post: CollectionEntry<'blog'>; }
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, category, hero } = post.data;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  image: hero ? new URL(hero.src, SITE.url).toString() : undefined,
+  author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  mainEntityOfPage: new URL(`/blog/${post.id}/`, SITE.url).toString(),
+};
+---
+<Base title={title} description={description} image={hero?.src} type="article">
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+  <article class="wrap prose">
+    <p class="muted meta">{category} · <FormattedDate date={pubDate} />
+      {updatedDate && <> · Updated <FormattedDate date={updatedDate} /></>}
+    </p>
+    <h1>{title}</h1>
+    <p class="lede">{description}</p>
+    <p class="disclosure">{AMAZON_DISCLOSURE} If you buy through links on this page, we may earn a small commission at no extra cost to you. <a href="/affiliate-disclosure/">Details</a>.</p>
+    {hero && (
+      <figure>
+        <img src={hero.src} alt={hero.alt} width="1200" height="675" />
+        <figcaption class="muted">Photo: <a href={hero.creditUrl} rel="noopener" target="_blank">{hero.credit}</a></figcaption>
+      </figure>
+    )}
+    <slot />
+  </article>
+</Base>
+<style>
+  .meta { margin: 0 0 .5rem; font-size: .9rem; }
+  .lede { font-size: 1.15rem; color: var(--muted); margin-top: 0; }
+  figure { margin: 1.5rem 0; }
+  figure img { border-radius: var(--radius); width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+  figcaption { font-size: .85rem; margin-top: .4rem; }
+</style>

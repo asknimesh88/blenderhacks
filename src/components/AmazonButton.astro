@@ -1,0 +1,6 @@
+---
+import { amazonUrl } from '../lib/amazon';
+interface Props { asin?: string; query?: string; label?: string; }
+const { asin, query, label = 'Check price on Amazon' } = Astro.props;
+---
+<a class="btn" href={amazonUrl({ asin, query })} rel="sponsored nofollow noopener" target="_blank">{label}</a>

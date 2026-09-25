@@ -1,0 +1,37 @@
+---
+// An image-free product card. Only state things you've verified on the
+// product page; prices change, so we never print them.
+import AmazonButton from './AmazonButton.astro';
+interface Props {
+  name: string;
+  asin?: string;
+  query?: string;
+  bestFor?: string;
+  pros?: string[];
+  cons?: string[];
+}
+const { name, asin, query = name, bestFor, pros = [], cons = [] } = Astro.props;
+---
+<aside class="product">
+  <p class="name">{name}</p>
+  {bestFor && <p class="best"><strong>Best for:</strong> {bestFor}</p>}
+  {(pros.length > 0 || cons.length > 0) && (
+    <div class="cols">
+      {pros.length > 0 && <div><p class="h">Good</p><ul>{pros.map((p) => <li>{p}</li>)}</ul></div>}
+      {cons.length > 0 && <div><p class="h">Watch out</p><ul>{cons.map((c) => <li>{c}</li>)}</ul></div>}
+    </div>
+  )}
+  <slot />
+  <AmazonButton asin={asin} query={asin ? undefined : query} />
+</aside>
+<style>
+  .product {
+    border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface);
+    padding: 1rem 1.2rem 1.2rem; margin: 1.5rem 0;
+  }
+  .name { font-weight: 700; font-size: 1.15rem; margin: 0 0 .25rem; }
+  .best { margin: 0 0 .5rem; color: var(--muted); }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .25rem 1.5rem; }
+  .h { font-weight: 600; margin: .5rem 0 0; }
+  ul { margin: .25rem 0 .75rem; padding-left: 1.2rem; }
+</style>

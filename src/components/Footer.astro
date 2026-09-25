@@ -1,0 +1,22 @@
+---
+import { SITE, AMAZON_DISCLOSURE } from '../config';
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="wrap wide">
+    <p class="muted small">{AMAZON_DISCLOSURE} Some links on this site are affiliate links, which means we may earn a commission at no extra cost to you. <a href="/affiliate-disclosure/">Learn more</a>.</p>
+    <nav>
+      <a href="/about/">About</a>
+      <a href="/affiliate-disclosure/">Affiliate Disclosure</a>
+      <a href="/privacy/">Privacy Policy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/rss.xml">RSS</a>
+    </nav>
+    <p class="muted small">© {year} {SITE.name}</p>
+  </div>
+</footer>
+<style>
+  footer { border-top: 1px solid var(--border); padding: 1.5rem 0 2rem; background: var(--surface); }
+  nav { display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; margin: .5rem 0; }
+  .small { font-size: .88rem; }
+</style>

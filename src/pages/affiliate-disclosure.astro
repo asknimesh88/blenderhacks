@@ -1,0 +1,16 @@
+---
+import Page from '../layouts/Page.astro';
+import { SITE, AMAZON_DISCLOSURE } from '../config';
+---
+<Page title="Affiliate Disclosure" description="How BlenderHacks earns money through affiliate links.">
+  <p><strong>{SITE.name} is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.</strong></p>
+  <p>{AMAZON_DISCLOSURE}</p>
+  <p>Some links on this site are affiliate links. If you click one and make a purchase, we may earn a commission at no additional cost to you. We may also join other affiliate programs (for example, a blender manufacturer's own program), and the same rules apply to those links.</p>
+  <h2>What this means for you</h2>
+  <ul>
+    <li>You never pay more because you used our link.</li>
+    <li>Commissions don't decide what we recommend. We point out downsides and suggest cheaper options when they make sense.</li>
+    <li>Affiliate links are marked with a "Check price" button or appear inside product boxes, and every article with affiliate links shows a disclosure near the top.</li>
+  </ul>
+  <p>Questions? <a href="/contact/">Contact us</a>.</p>
+</Page>

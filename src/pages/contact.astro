@@ -1,0 +1,9 @@
+---
+import Page from '../layouts/Page.astro';
+import { SITE } from '../config';
+---
+<Page title="Contact" description="Get in touch with BlenderHacks.">
+  <p>Have a question, a correction, or a blender tip you'd like us to cover? We'd love to hear it.</p>
+  <p><a class="btn" href={`mailto:${SITE.email}`}>Email {SITE.email}</a></p>
+  <p class="muted">We read every message, but we can't offer repair help for specific machines. For warranty or safety issues, please contact your blender's manufacturer.</p>
+</Page>

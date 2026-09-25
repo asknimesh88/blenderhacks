@@ -1,0 +1,21 @@
+---
+import { SITE } from '../config';
+const links = [
+  { href: '/blog/', label: 'Blog' },
+  { href: '/about/', label: 'About' },
+];
+---
+<header>
+  <div class="wrap wide bar">
+    <a class="logo" href="/"><img src="/favicon.svg" alt="" width="28" height="28" />{SITE.name}</a>
+    <nav>{links.map((l) => <a href={l.href}>{l.label}</a>)}</nav>
+  </div>
+</header>
+<style>
+  header { border-bottom: 1px solid var(--border); background: var(--surface); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .8rem; }
+  .logo { display: flex; align-items: center; gap: .5rem; font-weight: 800; font-size: 1.15rem; color: var(--text); text-decoration: none; }
+  nav { display: flex; gap: 1.1rem; }
+  nav a { color: var(--text); text-decoration: none; font-weight: 500; }
+  nav a:hover { color: var(--accent); }
+</style>

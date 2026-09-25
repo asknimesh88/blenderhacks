@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts } from '../../lib/posts';
+const posts = await getPosts();
+---
+<Base title="Blog" description="Every BlenderHacks article: blender tips, cleaning guides, recipes and buying advice.">
+  <div class="wrap wide">
+    <h1>All articles</h1>
+    <div class="grid">{posts.map((post) => <PostCard post={post} />)}</div>
+  </div>
+</Base>
+<style>
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+</style>
