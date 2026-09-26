@@ -9,8 +9,8 @@ Target: **2 posts a week**. Publish 10–15 before applying to Amazon Associates
 ## Cleaning & Care
 1. ✅ How to clean a blender in 60 seconds
 2. How to get rid of a cloudy film in a blender jar
-3. Why does my blender smell like burning? (and when to stop using it)
-4. How to fix a blender that's leaking from the bottom
+3. ✅ Why does my blender smell like burning? (and when to stop using it)
+4. ✅ How to fix a blender that's leaking from the bottom
 5. Can you sharpen blender blades? (spoiler: usually no, and what to do instead)
 6. How to remove stains from a plastic blender jar
 7. Blender gasket: how to clean it and when to replace it
@@ -18,7 +18,7 @@ Target: **2 posts a week**. Publish 10–15 before applying to Amazon Associates
 ## Tips & Tricks
 8. ✅ The right order to add smoothie ingredients
 9. Why won't my blender blend? Fixing air pockets and stalls
-10. Can you crush ice in any blender?
+10. ✅ Can you crush ice in any blender?
 11. Is it safe to blend hot soup? (countertop vs immersion)
 12. 12 things you didn't know your blender could do (oat flour, whipped cream, pancake batter…)
 13. How to make nut butter in a blender (and which blenders can handle it)

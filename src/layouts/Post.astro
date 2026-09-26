@@ -13,6 +13,7 @@ import NextPostPopup from '../components/NextPostPopup.astro';
 import { SITE, AUTHOR, AMAZON_DISCLOSURE, categorySlug } from '../config';
 import { getPosts, postUrl, relatedPosts, type Post as PostEntry } from '../lib/posts';
 import { overallScore } from '../lib/review';
+import { tagLinks } from '../lib/links';
 
 interface Props { post: PostEntry; }
 const { post } = Astro.props;
@@ -24,6 +25,7 @@ const next = posts[i - 1]; // newer
 const prev = posts[i + 1]; // older
 const url = new URL(postUrl(post), SITE.url).toString();
 const catHref = `/category/${categorySlug(category)}/`;
+const body = tagLinks(await Astro.slots.render('default'), SITE.url);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -69,7 +71,7 @@ const jsonLd = {
         <p class="disclosure">{AMAZON_DISCLOSURE} If you buy through links on this page, we may earn a small commission at no extra cost to you. <a href="/affiliate-disclosure/">Details</a>.</p>
         <div class="prose dropcap">
           {review && <DealsBox product={review.product} stores={review.stores} />}
-          <slot />
+          <Fragment set:html={body} />
         </div>
         {review && <ReviewBlock review={review} />}
         <PostTags tags={tags} />
