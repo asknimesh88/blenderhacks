@@ -17,7 +17,7 @@ const [first, ...rest] = recommended;
 <aside class="sidebar">
   {current?.data.review && <div class="review-card"><ReviewSidebar review={current.data.review} /></div>}
 
-  {!hot && first && (
+  {(!hot || reviewed.length === 0) && first && (
     <section>
       <h3 class="section-title"><span class="plain">Recommended</span>&nbsp;Reading</h3>
       <a class="feature" href={postUrl(first)}>
