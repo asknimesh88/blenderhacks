@@ -17,9 +17,16 @@ const props = Astro.props;
     <BaseHead {...props} />
     <slot name="head" />
   </head>
-  <body>
+  <body id="top">
     <Header />
     <main><slot /></main>
     <Footer />
+    <a href="#top" class="to-top" aria-label="Back to top">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+    </a>
   </body>
 </html>
+<style>
+  .to-top { position: fixed; right: 1.2rem; bottom: 1.2rem; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid var(--border); color: var(--muted); box-shadow: 0 2px 8px rgb(0 0 0 / .08); z-index: 10; }
+  .to-top:hover { color: var(--accent); }
+</style>

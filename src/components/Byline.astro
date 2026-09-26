@@ -1,0 +1,17 @@
+---
+// "★★★★☆  BY AUTHOR" line used on homepage cards.
+import Stars from './Stars.astro';
+import { AUTHOR } from '../config';
+import { overallScore } from '../lib/review';
+import type { Post } from '../lib/posts';
+interface Props { post: Post; }
+const { review } = Astro.props.post.data;
+---
+<p class="byline">
+  {review && <Stars percent={overallScore(review.criteria, review.score)} color="red" size=".8rem" />}
+  <span>by <a href="/about/">{AUTHOR.name}</a></span>
+</p>
+<style>
+  .byline { display: flex; align-items: center; gap: .7rem; margin: .35rem 0 .5rem; font-size: .62rem; text-transform: uppercase; color: var(--muted); }
+  a { font-weight: 600; }
+</style>

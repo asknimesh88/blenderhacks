@@ -18,6 +18,7 @@ npm run build    # production build into dist/
 | Blog posts | `src/content/blog/*.mdx` |
 | Stock photos | `public/images/` |
 | About / Disclosure / Privacy / Contact | `src/pages/` |
+| Homepage category blocks | `HOME_BLOCKS` in `src/config.ts` |
 | Content plan | `docs/content-plan.md` |
 
 ## Once you're approved for Amazon Associates

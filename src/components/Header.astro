@@ -27,12 +27,14 @@ const links = [
   .logo b { font-weight: 800; color: var(--accent); }
   nav { display: flex; flex-wrap: wrap; gap: .3rem 1.6rem; flex: 1; }
   nav a { white-space: nowrap; color: var(--text); font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; }
-  nav a:hover, nav a.active { color: var(--accent); }
+  nav a:hover { color: var(--accent); }
+  nav a.active { background: var(--bg-soft); color: var(--text); padding: .45rem .8rem; margin: -.45rem -.8rem; }
   .icon { color: var(--text); display: flex; }
   .icon:hover { color: var(--accent); }
   @media (max-width: 760px) {
     .bar { gap: .6rem 1rem; }
     nav { order: 3; flex-basis: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .2rem; }
     .icon { margin-left: auto; }
+    nav a.active { margin: 0; padding: .1rem .5rem; }
   }
 </style>

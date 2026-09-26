@@ -1,6 +1,0 @@
----
-import List from '../../layouts/List.astro';
-import { getPosts } from '../../lib/posts';
-const posts = await getPosts();
----
-<List title="Blog" description="Every BlenderHacks article: blender tips, cleaning guides, recipes and buying advice." kicker="All" heading="Articles" posts={posts} />

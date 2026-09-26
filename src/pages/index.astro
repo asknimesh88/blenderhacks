@@ -1,17 +1,55 @@
 ---
-import List from '../layouts/List.astro';
-import { getPosts } from '../lib/posts';
-import { SITE } from '../config';
-const posts = (await getPosts()).slice(0, 12);
+import Base from '../layouts/Base.astro';
+import TrendingBar from '../components/home/TrendingBar.astro';
+import HeroMosaic from '../components/home/HeroMosaic.astro';
+import CategoryBlock from '../components/home/CategoryBlock.astro';
+import LatestList from '../components/LatestList.astro';
+import Pagination from '../components/Pagination.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { SITE, HOME_BLOCKS, categorySlug } from '../config';
+import { getPosts, tagSlug } from '../lib/posts';
+import { PAGE_SIZE } from '../lib/constants';
+
+const posts = await getPosts();
+const blocks = HOME_BLOCKS.map((b) => ({
+  ...b,
+  href: b.category ? `/category/${categorySlug(b.category)}/` : b.tag ? `/tag/${tagSlug(b.tag)}/` : undefined,
+  posts: posts.filter((p) =>
+    b.reviews ? p.data.review : b.category ? p.data.category === b.category : b.tag ? p.data.tags.includes(b.tag) : false,
+  ),
+})).filter((b) => b.posts.length > 0);
+const lastPage = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
 ---
-<List title={SITE.name} description={SITE.description} kicker="Latest" heading="Articles" posts={posts} crumbs={false}>
-  <section class="intro" slot="top">
-    <h1>Get more out of your blender.</h1>
-    <p>{SITE.tagline} Smoother smoothies, faster cleanup, and no-nonsense help picking the right machine.</p>
+<Base title={SITE.name} description={SITE.description}>
+  <h1 class="visually-hidden">{SITE.name}: {SITE.tagline}</h1>
+  <section class="band">
+    <div class="container">
+      <TrendingBar posts={posts.slice(0, 5)} />
+      <HeroMosaic posts={posts.slice(0, 5)} />
+    </div>
   </section>
-</List>
+
+  <div class="container">
+    {blocks.length > 0 && (
+      <div class="blocks">
+        {blocks.map((b) => <CategoryBlock title={b.title} highlight={b.highlight} icon={b.icon} href={b.href} posts={b.posts} />)}
+      </div>
+    )}
+
+    <div class="layout">
+      <section>
+        <h2 class="section-title"><span class="plain">Latest&nbsp;</span>Articles</h2>
+        <LatestList posts={posts.slice(0, PAGE_SIZE)} />
+        <Pagination current={1} last={lastPage} href={(n) => (n === 1 ? '/' : `/blog/${n}/`)} />
+      </section>
+      <Sidebar hot />
+    </div>
+  </div>
+</Base>
 <style>
-  .intro { border-bottom: 1px solid var(--border); padding: .5rem 0 1.8rem; margin-bottom: 2rem; }
-  .intro h1 { font-size: clamp(1.9rem, 4.6vw, 2.8rem); font-weight: 700; letter-spacing: -.03em; margin: 0 0 .5rem; }
-  .intro p { margin: 0; font-size: 1rem; font-weight: 300; max-width: 40rem; }
+  :global(main):has(.band) { padding-top: 0; }
+  .band { background: var(--bg-soft); padding: 1.6rem 0 2rem; margin-bottom: 2.8rem; }
+  .blocks { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1rem 2rem; margin-bottom: 1.5rem; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: 2.5rem; align-items: start; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
 </style>

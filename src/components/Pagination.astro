@@ -1,0 +1,25 @@
+---
+// Numbered pagination: 1 2 … 4 ›
+interface Props { current: number; last: number; href: (page: number) => string; }
+const { current, last, href } = Astro.props;
+const pages = [...new Set([1, current - 1, current, current + 1, last])].filter((n) => n >= 1 && n <= last).sort((a, b) => a - b);
+---
+{last > 1 && (
+  <nav class="pages" aria-label="Pagination">
+    {current > 1 && <a href={href(current - 1)} aria-label="Previous page">‹</a>}
+    {pages.map((n, i) => (
+      <>
+        {i > 0 && n - pages[i - 1] > 1 && <span class="gap">…</span>}
+        {n === current ? <span class="cur" aria-current="page">{n}</span> : <a href={href(n)}>{n}</a>}
+      </>
+    ))}
+    {current < last && <a href={href(current + 1)} aria-label="Next page">›</a>}
+  </nav>
+)}
+<style>
+  .pages { display: flex; justify-content: center; align-items: center; gap: .4rem; margin: 1rem 0 2rem; font-size: .72rem; font-weight: 600; }
+  a, .cur { min-width: 1.8rem; height: 1.8rem; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--border); color: var(--text); }
+  a:hover { border-color: var(--accent); color: var(--accent); }
+  .cur { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .gap { color: var(--muted); }
+</style>

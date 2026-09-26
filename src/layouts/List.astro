@@ -1,22 +1,30 @@
 ---
+// Archive pages (blog, categories, tags): Latest-style list + pagination + sidebar.
 import Base from './Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import PostCard from '../components/PostCard.astro';
+import LatestList from '../components/LatestList.astro';
+import Pagination from '../components/Pagination.astro';
 import Sidebar from '../components/Sidebar.astro';
 import type { Post } from '../lib/posts';
-interface Props { title: string; description: string; heading: string; kicker?: string; posts: Post[]; crumbs?: boolean; }
-const { title, description, heading, kicker, posts, crumbs = true } = Astro.props;
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  kicker?: string;
+  posts: Post[];
+  page?: { current: number; last: number; base: string };
+}
+const { title, description, heading, kicker, posts, page } = Astro.props;
+const href = (n: number) => (n === 1 ? page!.base : `${page!.base}${n}/`);
 ---
 <Base title={title} description={description}>
   <div class="container">
-    {crumbs && <Breadcrumbs items={[{ href: '/', label: 'Home' }, { label: heading }]} />}
-    <slot name="top" />
+    <Breadcrumbs items={[{ href: '/', label: 'Home' }, { label: heading }]} />
     <div class="layout">
       <section>
         <h1 class="section-title">{kicker && <span class="plain">{kicker}&nbsp;</span>}{heading}</h1>
-        {posts.length > 0
-          ? <div class="grid">{posts.map((post) => <PostCard post={post} />)}</div>
-          : <p>No articles here yet. Check back soon.</p>}
+        {posts.length > 0 ? <LatestList posts={posts} /> : <p>No articles here yet. Check back soon.</p>}
+        {page && <Pagination current={page.current} last={page.last} href={href} />}
       </section>
       <Sidebar />
     </div>
@@ -24,6 +32,5 @@ const { title, description, heading, kicker, posts, crumbs = true } = Astro.prop
 </Base>
 <style>
   .layout { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: 2.5rem; align-items: start; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 2rem 1.6rem; }
   @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
 </style>

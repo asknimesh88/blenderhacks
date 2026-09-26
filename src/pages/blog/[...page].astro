@@ -1,0 +1,17 @@
+---
+import type { GetStaticPaths } from 'astro';
+import List from '../../layouts/List.astro';
+import { getPosts } from '../../lib/posts';
+import { PAGE_SIZE } from '../../lib/constants';
+
+export const getStaticPaths = (async ({ paginate }) => paginate(await getPosts(), { pageSize: PAGE_SIZE })) satisfies GetStaticPaths;
+const { page } = Astro.props;
+---
+<List
+  title={page.currentPage === 1 ? 'Blog' : `Blog – Page ${page.currentPage}`}
+  description="Every BlenderHacks article: blender tips, cleaning guides, recipes and buying advice."
+  kicker="Latest"
+  heading="Articles"
+  posts={page.data}
+  page={{ current: page.currentPage, last: page.lastPage, base: '/blog/' }}
+/>

@@ -1,0 +1,53 @@
+---
+// Up to five featured posts: two stacked left, one tall centre, two stacked right.
+import { postUrl, type Post } from '../../lib/posts';
+import { categorySlug } from '../../config';
+interface Props { posts: Post[]; }
+const posts = Astro.props.posts.slice(0, 5);
+// Put the newest post in the big centre tile.
+const order = posts.length === 5 ? [1, 2, 0, 3, 4] : posts.length === 4 ? [1, 2, 0, 3] : posts.map((_, i) => i);
+const tiles = order.map((i) => posts[i]);
+---
+{tiles.length > 0 && (
+  <div class={`mosaic n${tiles.length}`}>
+    {tiles.map((p, i) => (
+      <article class={`tile t${i + 1}`}>
+        {p.data.hero
+          ? <img src={p.data.hero.src} alt="" loading={i < 3 ? 'eager' : 'lazy'} />
+          : <span class="ph" aria-hidden="true"><img src="/favicon.svg" alt="" /></span>}
+        <div class="over">
+          <a class="cat" href={`/category/${categorySlug(p.data.category)}/`}>{p.data.category}</a>
+          <h2><a href={postUrl(p)}>{p.data.title}</a></h2>
+        </div>
+        <a class="cover" href={postUrl(p)} tabindex="-1" aria-hidden="true"></a>
+      </article>
+    ))}
+  </div>
+)}
+<style>
+  .mosaic { display: grid; gap: .7rem; grid-template-columns: 1fr; }
+  .tile { position: relative; overflow: hidden; background: #2b2b2b; min-height: 13rem; }
+  .tile > img, .ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .tile:hover > img { transform: scale(1.04); }
+  .ph { display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #262626, #4a4a4a); }
+  .ph { align-items: flex-start; padding-top: 12%; }
+  .ph img { width: 3rem; opacity: .25; }
+  .over { position: absolute; inset: auto 0 0 0; padding: 3rem 1.1rem 1.1rem; background: linear-gradient(transparent, rgb(0 0 0 / .8)); z-index: 2; pointer-events: none; }
+  .over a { pointer-events: auto; }
+  .cat { display: inline-block; background: var(--accent); color: #fff; font-size: .58rem; font-weight: 600; text-transform: uppercase; padding: .1rem .45rem; }
+  .cat:hover { color: #fff; }
+  h2 { margin: .4rem 0 0; font-size: 1.05rem; font-weight: 700; line-height: 1.3; letter-spacing: -.01em; }
+  h2 a { color: #fff; }
+  .cover { position: absolute; inset: 0; z-index: 1; }
+  @media (max-width: 760px) { .n5 .t3, .n4 .t3 { order: -1; } }
+  @media (min-width: 761px) {
+    .n5 { grid-template-columns: 1.15fr 1.05fr .8fr; grid-template-rows: 1fr 1.15fr; grid-template-areas: 'a c d' 'b c e'; height: 29rem; }
+    .n4 { grid-template-columns: 1.15fr 1.05fr .8fr; grid-template-areas: 'a c d' 'b c d'; height: 29rem; }
+    .n3 { grid-template-columns: 1.4fr 1fr; grid-template-areas: 'a b' 'a c'; height: 26rem; }
+    .n2 { grid-template-columns: 1fr 1fr; grid-template-areas: 'a b'; height: 22rem; }
+    .n1 { height: 24rem; }
+    .t1 { grid-area: a; } .t2 { grid-area: b; } .t3 { grid-area: c; } .t4 { grid-area: d; } .t5 { grid-area: e; }
+    .n5 .t3 h2, .n4 .t3 h2, .n3 .t1 h2, .n1 .t1 h2 { font-size: 1.5rem; }
+    .tile { min-height: 0; }
+  }
+</style>

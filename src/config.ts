@@ -26,6 +26,17 @@ export const CATEGORIES = [
 
 export type CategoryName = (typeof CATEGORIES)[number]['name'];
 
+// Homepage category blocks (three per row). A block matches a category, a tag,
+// or every post with a review score. Blocks with no posts are hidden.
+export const HOME_BLOCKS: { title: string; highlight: string; icon: string; category?: string; tag?: string; reviews?: boolean }[] = [
+  { title: 'Blender', highlight: 'Reviews', icon: 'star', reviews: true },
+  { title: 'Buying', highlight: 'Guides', icon: 'cart', category: 'Buying Guides' },
+  { title: 'Tips &', highlight: 'Tricks', icon: 'bulb', category: 'Tips & Tricks' },
+  { title: 'Cleaning &', highlight: 'Care', icon: 'drop', category: 'Cleaning & Care' },
+  { title: 'Smoothie', highlight: 'Ideas', icon: 'cup', tag: 'Smoothies' },
+  { title: 'Blender', highlight: 'Recipes', icon: 'bowl', category: 'Recipes' },
+];
+
 export const categorySlug = (name: string) =>
   CATEGORIES.find((c) => c.name === name)?.slug ?? 'blog';
 

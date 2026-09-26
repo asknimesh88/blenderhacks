@@ -6,17 +6,18 @@ import Stars from './Stars.astro';
 import { getPosts, postUrl, type Post } from '../lib/posts';
 import { overallScore } from '../lib/review';
 
-interface Props { current?: Post; }
-const { current } = Astro.props;
+// `hot` shows only the scored-products list, titled "Hot Product" (homepage).
+interface Props { current?: Post; hot?: boolean; }
+const { current, hot = false } = Astro.props;
 const posts = (await getPosts()).filter((p) => p.id !== current?.id);
 const recommended = posts.slice(0, 6);
-const reviewed = posts.filter((p) => p.data.review).slice(0, 4);
+const reviewed = posts.filter((p) => p.data.review).slice(0, hot ? 6 : 4);
 const [first, ...rest] = recommended;
 ---
 <aside class="sidebar">
   {current?.data.review && <div class="review-card"><ReviewSidebar review={current.data.review} /></div>}
 
-  {first && (
+  {!hot && first && (
     <section>
       <h3 class="section-title"><span class="plain">Recommended</span>&nbsp;Reading</h3>
       <a class="feature" href={postUrl(first)}>
@@ -33,7 +34,7 @@ const [first, ...rest] = recommended;
 
   {reviewed.length > 0 && (
     <section>
-      <h3 class="section-title"><span class="plain">Top</span>&nbsp;Review</h3>
+      <h3 class="section-title"><span class="plain">{hot ? 'Hot' : 'Top'}</span>&nbsp;{hot ? 'Product' : 'Review'}</h3>
       {reviewed.map((p) => {
         const r = p.data.review!;
         return (
