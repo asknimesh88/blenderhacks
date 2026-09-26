@@ -1,0 +1,15 @@
+---
+import List from '../../layouts/List.astro';
+import { CATEGORIES } from '../../config';
+import { getPosts } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return CATEGORIES.map((c) => ({
+    params: { category: c.slug },
+    props: { name: c.name, posts: posts.filter((p) => p.data.category === c.name) },
+  }));
+}
+const { name, posts } = Astro.props;
+---
+<List title={name} description={`BlenderHacks articles about ${name.toLowerCase()}.`} heading={name} posts={posts} />

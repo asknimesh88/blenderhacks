@@ -1,0 +1,49 @@
+---
+// "The Review" block at the end of a review post.
+import ScoreBars from './ScoreBars.astro';
+import StoreList from './StoreList.astro';
+import ProsCons from './ProsCons.astro';
+import Stars from '../Stars.astro';
+import { overallScore } from '../../lib/review';
+import type { Post } from '../../lib/posts';
+interface Props { review: NonNullable<Post['data']['review']>; }
+const { review } = Astro.props;
+const score = overallScore(review.criteria, review.score);
+---
+<section class="review" id="review">
+  <p class="kicker">The Review</p>
+  <h2 class="product">{review.product}</h2>
+  <div class="verdict">
+    <div class="score"><span class="num">{score}<sup>%</sup></span><span class="lbl">Score</span></div>
+    <div>
+      <p>{review.summary}</p>
+      <p class="rating"><Stars percent={score} /> <a href="/about/#how-we-score">Research-based score. How we score</a></p>
+    </div>
+  </div>
+  <ProsCons pros={review.pros} cons={review.cons} />
+  <div class="breakdown">
+    <p class="h">Review Breakdown</p>
+    <ScoreBars criteria={review.criteria} />
+  </div>
+  <div class="deals">
+    <p class="h">{review.product} Deals</p>
+    <p class="note">Prices change often, so check the retailer for today's price.</p>
+    <StoreList stores={review.stores} product={review.product} />
+  </div>
+</section>
+<style>
+  .review { border-top: 1px solid var(--border); margin-top: 2.5rem; padding-top: 1.5rem; clear: both; }
+  .kicker { font-size: .8rem; font-weight: 700; text-transform: uppercase; color: var(--text); margin: 0; }
+  .product { color: var(--accent); font-size: 1.6rem; font-weight: 400; margin: .1rem 0 1rem; }
+  .verdict { display: flex; gap: 1.2rem; align-items: flex-start; margin-bottom: 1.2rem; }
+  .verdict p { margin: 0 0 .5rem; font-size: .88rem; }
+  .score { flex: none; width: 5.5rem; height: 5.5rem; background: var(--score); color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  .num { font-size: 1.75rem; font-weight: 700; line-height: 1; }
+  .num sup { font-size: .5em; }
+  .lbl { font-size: .62rem; text-transform: uppercase; letter-spacing: .08em; margin-top: .8rem; }
+  .rating { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; font-size: .72rem !important; }
+  .breakdown { border: 1px solid var(--border); padding: 1.2rem 1.4rem .4rem; margin: 1.5rem 0; }
+  .h { font-size: 1rem; font-weight: 600; text-transform: uppercase; color: var(--text); margin: 0 0 1rem; }
+  .deals .h { margin-bottom: .2rem; }
+  .note { font-size: .75rem; margin: 0 0 .8rem; }
+</style>

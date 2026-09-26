@@ -1,0 +1,24 @@
+---
+import type { Criterion } from '../../lib/review';
+interface Props { criteria: Criterion[]; }
+const { criteria } = Astro.props;
+---
+<ul class="bars">
+  {criteria.map((c) => (
+    <li>
+      <div class="row"><span>{c.label}</span><span>{c.score}%</span></div>
+      <div class="track"><span class="fill" style={`width:${c.score}%`} /></div>
+    </li>
+  ))}
+</ul>
+<style>
+  .bars { list-style: none; margin: 0; padding: 0; }
+  li { margin: 0 0 1rem; }
+  .row { display: flex; justify-content: space-between; font-size: .72rem; font-weight: 600; color: var(--text); margin-bottom: .3rem; }
+  .track { height: 3px; background: var(--border); position: relative; }
+  .fill { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, var(--bar-from), var(--bar-to)); }
+  .fill::after {
+    content: ''; position: absolute; right: -4px; top: 50%; width: 8px; height: 8px; margin-top: -4px;
+    border-radius: 50%; background: #fff; border: 2px solid var(--bar-to);
+  }
+</style>

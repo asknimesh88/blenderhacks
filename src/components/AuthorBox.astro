@@ -1,0 +1,19 @@
+---
+import { AUTHOR, SITE } from '../config';
+---
+<section class="author">
+  <img src={AUTHOR.avatar} alt="" width="64" height="64" />
+  <div>
+    <p class="name"><a href="/about/">{AUTHOR.name}</a></p>
+    <p class="bio">{AUTHOR.bio}</p>
+    <p class="links"><a href="/about/">About {SITE.name}</a> · <a href="/contact/">Contact</a> · <a href="/rss.xml">RSS</a></p>
+  </div>
+</section>
+<style>
+  .author { display: flex; gap: 1.4rem; border: 1px solid var(--border); padding: 1.8rem; margin: 2rem 0; }
+  img { width: 4rem; height: 4rem; border-radius: 50%; flex: none; }
+  .name { margin: 0 0 .4rem; font-weight: 600; }
+  .bio { font-size: .8rem; color: var(--muted); margin: 0 0 .6rem; }
+  .links { font-size: .72rem; margin: 0; }
+  @media (max-width: 480px) { .author { flex-direction: column; padding: 1.2rem; } }
+</style>

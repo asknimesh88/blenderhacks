@@ -1,0 +1,17 @@
+---
+// Floated "PRODUCT DEALS" box at the top of a review post.
+import StoreList from './StoreList.astro';
+import type { Store } from '../../lib/review';
+interface Props { product: string; stores: Store[]; }
+const { product, stores } = Astro.props;
+---
+<aside class="deals">
+  <p class="title">{product} Deals</p>
+  <StoreList stores={stores} product={product} label="View" />
+</aside>
+<style>
+  .deals { float: right; width: 15rem; margin: .3rem 0 1rem 1.5rem; background: var(--bg-soft); padding: .9rem; }
+  .title { font-size: .8rem; font-weight: 600; text-transform: uppercase; color: var(--text); margin: 0 0 .6rem; line-height: 1.4; }
+  .deals :global(.stores) { background: #fff; }
+  @media (max-width: 560px) { .deals { float: none; width: auto; margin: 0 0 1.5rem; } }
+</style>

@@ -1,0 +1,15 @@
+---
+import List from '../../layouts/List.astro';
+import { getPosts, tagSlug } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+  return tags.map((tag) => ({
+    params: { tag: tagSlug(tag) },
+    props: { tag, posts: posts.filter((p) => p.data.tags.includes(tag)) },
+  }));
+}
+const { tag, posts } = Astro.props;
+---
+<List title={`Tag: ${tag}`} description={`BlenderHacks articles tagged ${tag}.`} kicker="Tag" heading={tag} posts={posts} />

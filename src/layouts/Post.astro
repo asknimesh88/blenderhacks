@@ -1,12 +1,30 @@
 ---
-import type { CollectionEntry } from 'astro:content';
 import Base from './Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { SITE, AMAZON_DISCLOSURE } from '../config';
+import ShareBar from '../components/ShareBar.astro';
+import Sidebar from '../components/Sidebar.astro';
+import DealsBox from '../components/review/DealsBox.astro';
+import ReviewBlock from '../components/review/ReviewBlock.astro';
+import PostTags from '../components/PostTags.astro';
+import PrevNext from '../components/PrevNext.astro';
+import AuthorBox from '../components/AuthorBox.astro';
+import NextPostPopup from '../components/NextPostPopup.astro';
+import { SITE, AUTHOR, AMAZON_DISCLOSURE, categorySlug } from '../config';
+import { getPosts, postUrl, relatedPosts, type Post as PostEntry } from '../lib/posts';
+import { overallScore } from '../lib/review';
 
-interface Props { post: CollectionEntry<'blog'>; }
+interface Props { post: PostEntry; }
 const { post } = Astro.props;
-const { title, description, pubDate, updatedDate, category, hero } = post.data;
+const { title, subtitle, description, pubDate, updatedDate, category, tags, hero, review } = post.data;
+
+const posts = await getPosts();
+const i = posts.findIndex((p) => p.id === post.id);
+const next = posts[i - 1]; // newer
+const prev = posts[i + 1]; // older
+const url = new URL(postUrl(post), SITE.url).toString();
+const catHref = `/category/${categorySlug(category)}/`;
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -15,33 +33,67 @@ const jsonLd = {
   datePublished: pubDate.toISOString(),
   dateModified: (updatedDate ?? pubDate).toISOString(),
   image: hero ? new URL(hero.src, SITE.url).toString() : undefined,
-  author: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+  author: { '@type': 'Organization', name: AUTHOR.name, url: SITE.url },
   publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
-  mainEntityOfPage: new URL(`/blog/${post.id}/`, SITE.url).toString(),
+  mainEntityOfPage: url,
 };
 ---
 <Base title={title} description={description} image={hero?.src} type="article">
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
-  <article class="wrap prose">
-    <p class="muted meta">{category} · <FormattedDate date={pubDate} />
-      {updatedDate && <> · Updated <FormattedDate date={updatedDate} /></>}
-    </p>
-    <h1>{title}</h1>
-    <p class="lede">{description}</p>
-    <p class="disclosure">{AMAZON_DISCLOSURE} If you buy through links on this page, we may earn a small commission at no extra cost to you. <a href="/affiliate-disclosure/">Details</a>.</p>
+  <div class="container">
+    <header class="post-head">
+      <Breadcrumbs items={[{ href: '/', label: 'Home' }, { href: catHref, label: category }, { label: title }]} />
+      <h1>{title}</h1>
+      {subtitle && <p class="subtitle">{subtitle}</p>}
+      <div class="meta">
+        <img src={AUTHOR.avatar} alt="" width="28" height="28" />
+        <span>by <a href="/about/" class="author">{AUTHOR.name}</a></span>
+        <span class="dash">—</span>
+        <FormattedDate date={pubDate} />
+        {updatedDate && <span>(updated <FormattedDate date={updatedDate} />)</span>}
+        <span>in <a href={catHref} class="cat">{category}</a></span>
+        {review && <a href="#review" class="jump">Score: {overallScore(review.criteria, review.score)}%</a>}
+      </div>
+    </header>
+
     {hero && (
-      <figure>
+      <figure class="hero">
         <img src={hero.src} alt={hero.alt} width="1200" height="675" />
-        <figcaption class="muted">Photo: <a href={hero.creditUrl} rel="noopener" target="_blank">{hero.credit}</a></figcaption>
+        <figcaption>Photo: <a href={hero.creditUrl} rel="noopener" target="_blank">{hero.credit}</a></figcaption>
       </figure>
     )}
-    <slot />
-  </article>
+    <ShareBar url={url} title={title} image={hero ? new URL(hero.src, SITE.url).toString() : undefined} />
+
+    <div class="layout">
+      <div class="main">
+        <p class="disclosure">{AMAZON_DISCLOSURE} If you buy through links on this page, we may earn a small commission at no extra cost to you. <a href="/affiliate-disclosure/">Details</a>.</p>
+        <div class="prose dropcap">
+          {review && <DealsBox product={review.product} stores={review.stores} />}
+          <slot />
+        </div>
+        {review && <ReviewBlock review={review} />}
+        <PostTags tags={tags} />
+        <PrevNext prev={prev} next={next} />
+        <AuthorBox />
+      </div>
+      <Sidebar current={post} />
+    </div>
+  </div>
+  <NextPostPopup posts={relatedPosts(posts, post, 3)} />
 </Base>
 <style>
-  .meta { margin: 0 0 .5rem; font-size: .9rem; }
-  .lede { font-size: 1.15rem; color: var(--muted); margin-top: 0; }
-  figure { margin: 1.5rem 0; }
-  figure img { border-radius: var(--radius); width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
-  figcaption { font-size: .85rem; margin-top: .4rem; }
+  .post-head { max-width: 50rem; }
+  h1 { font-size: clamp(1.9rem, 4.6vw, 3rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.15; margin: 0 0 .9rem; }
+  .subtitle { font-size: 1.05rem; font-weight: 300; color: var(--muted); margin: 0 0 1.2rem; }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; font-size: .72rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .meta img { width: 1.75rem; height: 1.75rem; border-radius: 50%; }
+  .author { font-weight: 600; }
+  .cat { color: var(--text); font-weight: 500; }
+  .jump { margin-left: auto; background: var(--score); color: #fff; padding: .15rem .55rem; font-weight: 600; }
+  .jump:hover { color: #fff; }
+  .hero { margin: 0; }
+  .hero img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; }
+  .hero figcaption { font-size: .7rem; color: var(--muted); margin-top: .35rem; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: 2.5rem; align-items: start; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
 </style>

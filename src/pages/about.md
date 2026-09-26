@@ -22,3 +22,14 @@ Some links on this site are affiliate links, including links to Amazon. If you b
 Photos on this site come from free stock libraries such as Unsplash and Pexels, and each one is credited to its photographer.
 
 Questions or corrections? [Get in touch](/contact/).
+
+<h2 id="how-we-score">How we score</h2>
+
+Some articles include a score out of 100%, star ratings and a review breakdown. These are **research-based ratings, not lab tests**. For each product we look at:
+
+- **Manufacturer specifications:** motor, container size, controls, what's included.
+- **Warranty length and terms**, one of the clearest signs of how long a maker expects a motor to last.
+- **Long-term owner feedback:** recurring praise and recurring complaints across many reviews.
+- **Value** compared with similar blenders.
+
+The overall score is the average of the breakdown scores. Stars are the same score shown out of five (for example, 90% = 4.5 stars). If we later test a product hands-on, we'll say so clearly in the article.

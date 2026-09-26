@@ -1,25 +1,17 @@
 ---
-import Base from '../layouts/Base.astro';
-import PostCard from '../components/PostCard.astro';
+import List from '../layouts/List.astro';
 import { getPosts } from '../lib/posts';
 import { SITE } from '../config';
-const posts = (await getPosts()).slice(0, 6);
+const posts = (await getPosts()).slice(0, 12);
 ---
-<Base title={SITE.name} description={SITE.description}>
-  <section class="hero">
-    <div class="wrap wide">
-      <h1>Get more out of your blender.</h1>
-      <p class="sub">{SITE.tagline} Smoother smoothies, faster cleanup, and no-nonsense help picking the right machine.</p>
-      <a class="btn" href="/blog/">Read the latest tips</a>
-    </div>
+<List title={SITE.name} description={SITE.description} kicker="Latest" heading="Articles" posts={posts} crumbs={false}>
+  <section class="intro" slot="top">
+    <h1>Get more out of your blender.</h1>
+    <p>{SITE.tagline} Smoother smoothies, faster cleanup, and no-nonsense help picking the right machine.</p>
   </section>
-  <div class="wrap wide">
-    <h2>Latest articles</h2>
-    <div class="grid">{posts.map((post) => <PostCard post={post} />)}</div>
-  </div>
-</Base>
+</List>
 <style>
-  .hero { padding: 1.5rem 0 2rem; }
-  .sub { font-size: 1.15rem; color: var(--muted); max-width: 36rem; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1.25rem; }
+  .intro { border-bottom: 1px solid var(--border); padding: .5rem 0 1.8rem; margin-bottom: 2rem; }
+  .intro h1 { font-size: clamp(1.9rem, 4.6vw, 2.8rem); font-weight: 700; letter-spacing: -.03em; margin: 0 0 .5rem; }
+  .intro p { margin: 0; font-size: 1rem; font-weight: 300; max-width: 40rem; }
 </style>

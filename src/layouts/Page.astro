@@ -1,11 +1,16 @@
 ---
 import Base from './Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 interface Props { title: string; description: string; }
 const { title, description } = Astro.props;
 ---
 <Base title={title} description={description}>
-  <article class="wrap prose">
-    <h1>{title}</h1>
+  <article class="container narrow prose">
+    <Breadcrumbs items={[{ href: '/', label: 'Home' }, { label: title }]} />
+    <h1 class="title">{title}</h1>
     <slot />
   </article>
 </Base>
+<style>
+  .title { font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 700; letter-spacing: -.02em; margin: 0 0 1.5rem; }
+</style>

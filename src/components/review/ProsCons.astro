@@ -1,0 +1,29 @@
+---
+interface Props { pros: string[]; cons: string[]; stacked?: boolean; }
+const { pros, cons, stacked = false } = Astro.props;
+---
+<div class:list={['pc', { stacked }]}>
+  {pros.length > 0 && (
+    <div><p class="h">Pros</p><ul class="pros">{pros.map((p) => <li>{p}</li>)}</ul></div>
+  )}
+  {cons.length > 0 && (
+    <div><p class="h">Cons</p><ul class="cons">{cons.map((c) => <li>{c}</li>)}</ul></div>
+  )}
+</div>
+<style>
+  .pc { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); background: var(--bg-soft); }
+  .pc > div { padding: 1.2rem 1.4rem; }
+  .pc > div + div { border-left: 1px solid #e6e6e6; }
+  .stacked { display: block; background: none; }
+  .stacked > div { padding: 0 0 .8rem; }
+  .stacked > div + div { border: 0; }
+  .h { font-size: .95rem; font-weight: 600; text-transform: uppercase; color: var(--text); margin: 0 0 .5rem; }
+  .stacked .h { font-weight: 400; font-size: .9rem; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { position: relative; padding-left: 1.4rem; margin: .35rem 0; font-size: .82rem; color: var(--text); }
+  .stacked li { color: var(--body); font-size: .78rem; }
+  li::before { position: absolute; left: 0; top: 0; color: var(--muted); font-size: .8rem; }
+  .pros li::before { content: '✓'; }
+  .cons li::before { content: '✕'; }
+  @media (max-width: 480px) { .pc > div + div { border-left: 0; border-top: 1px solid #e6e6e6; } }
+</style>

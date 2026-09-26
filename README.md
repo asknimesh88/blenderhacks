@@ -14,7 +14,7 @@ npm run build    # production build into dist/
 
 | What | Where |
 |---|---|
-| Site name, email, **Amazon tag** | `src/config.ts` |
+| Site name, email, author, **Amazon tag** | `src/config.ts` |
 | Blog posts | `src/content/blog/*.mdx` |
 | Stock photos | `public/images/` |
 | About / Disclosure / Privacy / Contact | `src/pages/` |
@@ -38,42 +38,63 @@ Amazon rules to remember:
 
 ## Writing a new post
 
+Every post uses the same layout: breadcrumbs, title, subtitle, byline, featured image, share bar, drop-cap intro, sidebar (score card, Recommended Reading, Top Review), then tags, previous/next links and the author box. A review post also gets a Deals box at the top and **The Review** block (score, stars, pros/cons, review breakdown, deals) at the end.
+
 Create `src/content/blog/your-post-slug.mdx`:
 
 ```mdx
 ---
 title: "Post title"
+subtitle: "Short line under the title"
 description: "One or two sentences. This is also the Google snippet."
 pubDate: 2026-10-01
-category: "Tips & Tricks"   # or "Cleaning & Care", "Buying Guides", "Recipes"
+category: "Buying Guides"   # "Tips & Tricks", "Cleaning & Care", "Buying Guides", "Recipes"
+tags: ["Reviews", "Personal Blenders"]
 draft: true                  # remove when ready to publish
-hero:                        # optional
+hero:                        # optional stock photo
   src: /images/your-photo.jpg
   alt: "Describe the photo"
   credit: "Photographer Name on Unsplash"
   creditUrl: "https://unsplash.com/photos/..."
+review:                      # optional: turns the post into a scored review
+  product: "Product name"
+  summary: "One-paragraph verdict."
+  criteria:                  # percent; the overall score is their average
+    - { label: "Blending results", score: 85 }
+    - { label: "Ease of cleaning", score: 90 }
+  pros: ["...", "..."]
+  cons: ["..."]
+  stores:
+    - { name: "Amazon", query: "product search words" }   # or asin: "B0XXXXXXXX"
 ---
-import ProductBox from '../../components/ProductBox.astro';
-import AmazonButton from '../../components/AmazonButton.astro';
 
 Your post...
 
+<RelatedPosts />              {/* two related articles, anywhere in the text */}
+<PullQuote>A big centered quote.</PullQuote>
+
 <ProductBox
+  rank={1}
   name="Product name"
   query="search words for Amazon"
   bestFor="Who it's for"
+  criteria={[{ label: "Ease of use", score: 90 }, { label: "Value", score: 80 }]}
   pros={["...", "..."]}
   cons={["..."]}
 />
 
-Or a plain button: <AmazonButton query="immersion blender" />
+<AmazonButton query="immersion blender" />
 ```
+
+No imports are needed: `ProductBox`, `AmazonButton`, `RelatedPosts` and `PullQuote` are available in every post. `src/content/blog/nutribullet-pro-900-review.mdx` is a full example (a draft, so it isn't published).
+
+**Scores:** stars are the score out of five (90% = 4.5 stars). Scores are research-based ratings, not lab tests, and the "How we score" section on the About page explains this. Only publish a score you can justify from specs, warranty terms and owner reviews.
 
 **Linking products:** `query="..."` links to an Amazon search. Once you've picked an exact product, use `asin="B0..."` instead. The ASIN is the 10-character code after `/dp/` in the product's Amazon URL.
 
-**Stock photos:** download from [Unsplash](https://unsplash.com) or [Pexels](https://pexels.com). Resize to about 1600px wide, save as `.jpg`/`.webp` in `public/images/`, and fill in the `hero` block with the photographer's credit. Don't use a stock photo that shows a specific branded blender as if it were the product you're recommending.
+**Stock photos:** download from [Unsplash](https://unsplash.com) or [Pexels](https://pexels.com). Resize to about 1600px wide, save in `public/images/`, and fill in the `hero` block with the photographer's credit. Don't use a stock photo that shows a specific branded blender as if it were the product you're recommending.
 
-**Honesty:** you don't own the products, so write buying advice as research ("based on specs and owner feedback"), not "we tested". This protects you with the FTC and with Google.
+**Author:** set the byline name, bio and avatar in `AUTHOR` in `src/config.ts`.
 
 ## Deploying to blenderhacks.com (Cloudflare Pages)
 

@@ -1,37 +1,66 @@
 ---
-// An image-free product card. Only state things you've verified on the
-// product page; prices change, so we never print them.
+// A product card for roundups and guides: optional score, stars and rating
+// bars, pros/cons and a buy button. No images, and no prices (Amazon's rules).
 import AmazonButton from './AmazonButton.astro';
+import Stars from './Stars.astro';
+import ScoreBars from './review/ScoreBars.astro';
+import { overallScore, type Criterion } from '../lib/review';
+
 interface Props {
   name: string;
   asin?: string;
   query?: string;
   bestFor?: string;
+  rank?: number;
+  score?: number;          // percent; defaults to the criteria average
+  criteria?: Criterion[];  // e.g. [{ label: 'Ease of cleaning', score: 90 }]
   pros?: string[];
   cons?: string[];
 }
-const { name, asin, query = name, bestFor, pros = [], cons = [] } = Astro.props;
+const { name, asin, query = name, bestFor, rank, criteria = [], pros = [], cons = [] } = Astro.props;
+const score = criteria.length > 0 || Astro.props.score !== undefined
+  ? overallScore(criteria, Astro.props.score)
+  : undefined;
 ---
 <aside class="product">
-  <p class="name">{name}</p>
-  {bestFor && <p class="best"><strong>Best for:</strong> {bestFor}</p>}
+  <div class="top">
+    <div>
+      {rank !== undefined && <span class="rank">#{rank}</span>}
+      <p class="name">{name}</p>
+      {bestFor && <p class="best">Best for: {bestFor}</p>}
+      {score !== undefined && <Stars percent={score} />}
+    </div>
+    {score !== undefined && (
+      <div class="score"><span class="num">{score}<sup>%</sup></span><span class="lbl">Score</span></div>
+    )}
+  </div>
+  {criteria.length > 0 && <div class="bars"><ScoreBars criteria={criteria} /></div>}
   {(pros.length > 0 || cons.length > 0) && (
-    <div class="cols">
-      {pros.length > 0 && <div><p class="h">Good</p><ul>{pros.map((p) => <li>{p}</li>)}</ul></div>}
-      {cons.length > 0 && <div><p class="h">Watch out</p><ul>{cons.map((c) => <li>{c}</li>)}</ul></div>}
+    <div class="pc">
+      {pros.length > 0 && <div><p class="h">Pros</p><ul class="pros">{pros.map((p) => <li>{p}</li>)}</ul></div>}
+      {cons.length > 0 && <div><p class="h">Cons</p><ul class="cons">{cons.map((c) => <li>{c}</li>)}</ul></div>}
     </div>
   )}
   <slot />
-  <AmazonButton asin={asin} query={asin ? undefined : query} />
+  <div class="cta"><AmazonButton asin={asin} query={asin ? undefined : query} /></div>
 </aside>
 <style>
-  .product {
-    border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface);
-    padding: 1rem 1.2rem 1.2rem; margin: 1.5rem 0;
-  }
-  .name { font-weight: 700; font-size: 1.15rem; margin: 0 0 .25rem; }
-  .best { margin: 0 0 .5rem; color: var(--muted); }
-  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .25rem 1.5rem; }
-  .h { font-weight: 600; margin: .5rem 0 0; }
-  ul { margin: .25rem 0 .75rem; padding-left: 1.2rem; }
+  .product { border: 1px solid var(--border); border-top: 3px solid var(--accent); margin: 1.8rem 0; background: #fff; }
+  .top { display: flex; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.2rem .6rem; }
+  .rank { display: inline-block; background: var(--accent); color: #fff; font-size: .65rem; font-weight: 700; padding: .1rem .45rem; margin-bottom: .4rem; }
+  .name { font-weight: 600; font-size: 1.1rem; color: var(--text); margin: 0 0 .2rem !important; line-height: 1.35; }
+  .best { font-size: .78rem; margin: 0 0 .4rem !important; }
+  .score { flex: none; width: 4.4rem; height: 4.4rem; background: var(--score); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .num { font-size: 1.35rem; font-weight: 700; line-height: 1; }
+  .num sup { font-size: .5em; }
+  .lbl { font-size: .55rem; text-transform: uppercase; letter-spacing: .08em; margin-top: .45rem; }
+  .bars { padding: .6rem 1.2rem 0; }
+  .pc { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0 1.5rem; background: var(--bg-soft); padding: .9rem 1.2rem .5rem; margin-top: .4rem; }
+  .h { font-size: .78rem; font-weight: 600; text-transform: uppercase; color: var(--text); margin: 0 0 .2rem !important; }
+  ul { list-style: none; margin: 0 0 .6rem !important; padding: 0 !important; }
+  li { position: relative; padding-left: 1.3rem; font-size: .8rem; margin: .25rem 0; }
+  li::before { position: absolute; left: 0; color: var(--muted); }
+  .pros li::before { content: '✓'; }
+  .cons li::before { content: '✕'; }
+  .cta { padding: .9rem 1.2rem 1.1rem; }
 </style>

@@ -1,0 +1,29 @@
+---
+import Base from './Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import PostCard from '../components/PostCard.astro';
+import Sidebar from '../components/Sidebar.astro';
+import type { Post } from '../lib/posts';
+interface Props { title: string; description: string; heading: string; kicker?: string; posts: Post[]; crumbs?: boolean; }
+const { title, description, heading, kicker, posts, crumbs = true } = Astro.props;
+---
+<Base title={title} description={description}>
+  <div class="container">
+    {crumbs && <Breadcrumbs items={[{ href: '/', label: 'Home' }, { label: heading }]} />}
+    <slot name="top" />
+    <div class="layout">
+      <section>
+        <h1 class="section-title">{kicker && <span class="plain">{kicker}&nbsp;</span>}{heading}</h1>
+        {posts.length > 0
+          ? <div class="grid">{posts.map((post) => <PostCard post={post} />)}</div>
+          : <p>No articles here yet. Check back soon.</p>}
+      </section>
+      <Sidebar />
+    </div>
+  </div>
+</Base>
+<style>
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: 2.5rem; align-items: start; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 2rem 1.6rem; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+</style>

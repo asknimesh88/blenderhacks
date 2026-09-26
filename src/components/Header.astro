@@ -1,21 +1,38 @@
 ---
-import { SITE } from '../config';
+import { SITE, CATEGORIES } from '../config';
+const path = Astro.url.pathname;
 const links = [
-  { href: '/blog/', label: 'Blog' },
-  { href: '/about/', label: 'About' },
+  { href: '/', label: 'Home' },
+  ...CATEGORIES.map((c) => ({ href: `/category/${c.slug}/`, label: c.name })),
 ];
 ---
 <header>
-  <div class="wrap wide bar">
-    <a class="logo" href="/"><img src="/favicon.svg" alt="" width="28" height="28" />{SITE.name}</a>
-    <nav>{links.map((l) => <a href={l.href}>{l.label}</a>)}</nav>
+  <div class="container bar">
+    <a class="logo" href="/" aria-label={`${SITE.name} home`}>
+      <img src="/favicon.svg" alt="" width="42" height="42" />
+      <span>Blender<b>Hacks</b></span>
+    </a>
+    <nav aria-label="Main">
+      {links.map((l) => <a href={l.href} class:list={{ active: path === l.href }}>{l.label}</a>)}
+    </nav>
+    <a class="icon" href="/rss.xml" aria-label="RSS feed">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="5" cy="19" r="2.5" fill="currentColor"/><path d="M3 10.5a10.5 10.5 0 0 1 10.5 10.5M3 3.5A17.5 17.5 0 0 1 20.5 21" fill="none" stroke="currentColor" stroke-width="3"/></svg>
+    </a>
   </div>
 </header>
 <style>
-  header { border-bottom: 1px solid var(--border); background: var(--surface); }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .8rem; }
-  .logo { display: flex; align-items: center; gap: .5rem; font-weight: 800; font-size: 1.15rem; color: var(--text); text-decoration: none; }
-  nav { display: flex; gap: 1.1rem; }
-  nav a { color: var(--text); text-decoration: none; font-weight: 500; }
-  nav a:hover { color: var(--accent); }
+  header { border-bottom: 1px solid var(--border); background: #fff; }
+  .bar { display: flex; align-items: center; gap: 2rem; min-height: 5rem; flex-wrap: wrap; padding-block: .6rem; }
+  .logo { display: flex; align-items: center; gap: .6rem; color: var(--text); font-size: 1.25rem; font-weight: 500; letter-spacing: -.01em; }
+  .logo b { font-weight: 800; color: var(--accent); }
+  nav { display: flex; flex-wrap: wrap; gap: .3rem 1.6rem; flex: 1; }
+  nav a { white-space: nowrap; color: var(--text); font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; }
+  nav a:hover, nav a.active { color: var(--accent); }
+  .icon { color: var(--text); display: flex; }
+  .icon:hover { color: var(--accent); }
+  @media (max-width: 760px) {
+    .bar { gap: .6rem 1rem; }
+    nav { order: 3; flex-basis: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: .2rem; }
+    .icon { margin-left: auto; }
+  }
 </style>

@@ -1,0 +1,22 @@
+---
+// Store rows. We never print prices (Amazon's rules), so each row links out instead.
+import { storeUrl, type Store } from '../../lib/review';
+interface Props { stores: Store[]; product: string; label?: string; compact?: boolean; }
+const { stores, product, label = 'Buy now', compact = false } = Astro.props;
+---
+<ul class:list={['stores', { compact }]}>
+  {stores.map((s) => (
+    <li>
+      <span class="name">{s.name}</span>
+      <a class="btn" href={storeUrl(s, product)} rel="sponsored nofollow noopener" target="_blank">{label}</a>
+    </li>
+  ))}
+</ul>
+<style>
+  .stores { list-style: none; margin: 0; padding: 0; border: 1px solid var(--border); }
+  li { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .55rem .8rem; font-size: .8rem; color: var(--text); }
+  li + li { border-top: 1px solid var(--border); }
+  .compact { border: 0; }
+  .compact li { padding: .7rem 0; }
+  .btn { font-size: .62rem; padding: .3rem .6rem; }
+</style>

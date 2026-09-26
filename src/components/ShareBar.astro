@@ -1,0 +1,41 @@
+---
+interface Props { url: string; title: string; image?: string; }
+const { url, title, image } = Astro.props;
+const u = encodeURIComponent(url);
+const t = encodeURIComponent(title);
+const links = {
+  facebook: `https://www.facebook.com/sharer/sharer.php?u=${u}`,
+  x: `https://x.com/intent/post?url=${u}&text=${t}`,
+  pinterest: `https://pinterest.com/pin/create/button/?url=${u}&description=${t}${image ? `&media=${encodeURIComponent(image)}` : ''}`,
+  email: `mailto:?subject=${t}&body=${u}`,
+};
+---
+<div class="share">
+  <a class="fb" href={links.facebook} target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.5 1.6-1.5h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.5V14h2.7v8z"/></svg>
+    <span>Share on Facebook</span>
+  </a>
+  <a class="x" href={links.x} target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.8 3h3l-6.6 7.6L22 21h-6.1l-4.8-6.2L5.6 21h-3l7.1-8.1L2.2 3h6.2l4.3 5.7zm-1 16.2h1.7L7.3 4.7H5.5z"/></svg>
+    <span>Share on X</span>
+  </a>
+  <a class="sq mail" href={links.email} aria-label="Share by email">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5h18v14H3zm2 2v.5l7 4.5 7-4.5V7zm0 2.9V17h14V9.9l-7 4.5z"/></svg>
+  </a>
+  <a class="sq pin" href={links.pinterest} target="_blank" rel="noopener" aria-label="Share on Pinterest">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.5 1.8-2.5.9 0 1.3.7 1.3 1.4 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.9 1.6 1.9 1.9 0 3.3-2 3.3-4.9 0-2.6-1.8-4.4-4.5-4.4-3 0-4.8 2.3-4.8 4.6 0 .9.4 1.9.8 2.4l.1.4-.3 1.2c0 .2-.2.3-.4.2-1.4-.7-2.2-2.7-2.2-4.3 0-3.5 2.5-6.8 7.4-6.8 3.9 0 6.9 2.8 6.9 6.5 0 3.9-2.4 7-5.8 7-1.1 0-2.2-.6-2.6-1.3l-.7 2.7c-.3 1-1 2.2-1.4 3A10 10 0 1 0 12 2"/></svg>
+  </a>
+</div>
+<style>
+  .share { display: flex; gap: .4rem; margin: 1rem 0 1.8rem; }
+  a { display: flex; align-items: center; justify-content: center; gap: .5rem; height: 2.2rem; color: #fff; font-size: .72rem; font-weight: 600; border-radius: var(--radius); }
+  a:hover { color: #fff; filter: brightness(1.1); }
+  svg { width: 1rem; height: 1rem; }
+  .fb, .x { flex: 1; }
+  .fb { background: #45629f; }
+  .x { background: #000; }
+  .sq { width: 2.2rem; flex: none; }
+  .mail { background: #db4437; }
+  .pin { background: #cf2830; }
+  @media (max-width: 480px) { .fb span, .x span { display: none; } }
+</style>

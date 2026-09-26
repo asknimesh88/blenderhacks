@@ -1,6 +1,10 @@
 ---
 import { render } from 'astro:content';
 import Post from '../../layouts/Post.astro';
+import ProductBox from '../../components/ProductBox.astro';
+import AmazonButton from '../../components/AmazonButton.astro';
+import RelatedPosts from '../../components/RelatedPosts.astro';
+import PullQuote from '../../components/PullQuote.astro';
 import { getPosts } from '../../lib/posts';
 
 export async function getStaticPaths() {
@@ -9,5 +13,7 @@ export async function getStaticPaths() {
 }
 const { post } = Astro.props;
 const { Content } = await render(post);
+// Available in every post without an import.
+const components = { ProductBox, AmazonButton, RelatedPosts, PullQuote };
 ---
-<Post post={post}><Content /></Post>
+<Post post={post}><Content components={components} /></Post>

@@ -1,0 +1,68 @@
+---
+// Right-hand column: optional review score card, Recommended Reading, Top Review.
+import ReviewSidebar from './review/ReviewSidebar.astro';
+import Thumb from './Thumb.astro';
+import Stars from './Stars.astro';
+import { getPosts, postUrl, type Post } from '../lib/posts';
+import { overallScore } from '../lib/review';
+
+interface Props { current?: Post; }
+const { current } = Astro.props;
+const posts = (await getPosts()).filter((p) => p.id !== current?.id);
+const recommended = posts.slice(0, 6);
+const reviewed = posts.filter((p) => p.data.review).slice(0, 4);
+const [first, ...rest] = recommended;
+---
+<aside class="sidebar">
+  {current?.data.review && <div class="review-card"><ReviewSidebar review={current.data.review} /></div>}
+
+  {first && (
+    <section>
+      <h3 class="section-title"><span class="plain">Recommended</span>&nbsp;Reading</h3>
+      <a class="feature" href={postUrl(first)}>
+        <Thumb post={first} ratio="16 / 11" />
+        <span class="ft"><span>{first.data.title}</span><span class="n">01</span></span>
+      </a>
+      <ol>
+        {rest.map((p, i) => (
+          <li><span class="n">{String(i + 2).padStart(2, '0')}</span><a href={postUrl(p)}>{p.data.title}</a></li>
+        ))}
+      </ol>
+    </section>
+  )}
+
+  {reviewed.length > 0 && (
+    <section>
+      <h3 class="section-title"><span class="plain">Top</span>&nbsp;Review</h3>
+      {reviewed.map((p) => {
+        const r = p.data.review!;
+        return (
+          <a class="top" href={postUrl(p)}>
+            <Thumb post={p} width="5.5rem" />
+            <span>
+              <span class="tt">{r.product}</span>
+              <span class="ts">{p.data.description}</span>
+              <Stars percent={overallScore(r.criteria, r.score)} size=".75rem" />
+            </span>
+          </a>
+        );
+      })}
+    </section>
+  )}
+</aside>
+<style>
+  .sidebar { display: flex; flex-direction: column; gap: 2.5rem; }
+  .feature { display: block; color: var(--text); }
+  .ft { display: flex; justify-content: space-between; gap: 1rem; font-weight: 700; font-size: 1rem; line-height: 1.35; margin: .8rem 0 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .feature:hover .ft span:first-child, ol a:hover, .top:hover .tt { color: var(--accent); }
+  .ft .n { font-size: 2rem; font-style: italic; font-weight: 300; color: #ddd; line-height: 1; border-left: 1px solid var(--border); padding-left: .8rem; }
+  ol { list-style: none; margin: 0; padding: 0; }
+  li { display: flex; gap: .9rem; align-items: flex-start; margin-bottom: 1.1rem; }
+  li .n { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: .8rem; font-style: italic; color: var(--muted); }
+  ol a { color: var(--text); font-size: .8rem; line-height: 1.45; }
+  .top { display: flex; gap: .9rem; margin-bottom: 1.1rem; color: var(--body); align-items: flex-start; }
+  .tt { display: block; color: var(--text); font-weight: 600; font-size: .8rem; line-height: 1.4; }
+  .ts { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; font-size: .72rem; line-height: 1.5; margin: .2rem 0 .3rem; }
+  /* On narrow screens the full review block already sits under the article. */
+  @media (max-width: 900px) { .review-card { display: none; } }
+</style>

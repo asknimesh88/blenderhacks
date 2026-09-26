@@ -1,0 +1,10 @@
+---
+// Large centered quote between two short rules.
+---
+<figure class="pq"><blockquote><slot /></blockquote></figure>
+<style>
+  .pq { margin: 2.5rem auto; max-width: 30rem; text-align: center; }
+  .pq::before, .pq::after { content: ''; display: block; width: 2.2rem; height: 1px; background: #ccc; margin: 0 auto; }
+  blockquote { margin: 1.2rem 0; padding: 0; background: none; border: 0; font-size: 1.2rem; font-style: italic; font-weight: 300; line-height: 1.6; color: var(--muted); }
+  blockquote :global(p) { margin: 0; }
+</style>

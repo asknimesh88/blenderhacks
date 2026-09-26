@@ -1,0 +1,18 @@
+---
+import { postUrl, type Post } from '../lib/posts';
+interface Props { prev?: Post; next?: Post; }
+const { prev, next } = Astro.props;
+---
+{(prev || next) && (
+  <nav class="pn" aria-label="More posts">
+    <div>{prev && <><span class="lbl">Previous Post</span><a href={postUrl(prev)}>{prev.data.title}</a></>}</div>
+    <div>{next && <><span class="lbl">Next Post</span><a href={postUrl(next)}>{next.data.title}</a></>}</div>
+  </nav>
+)}
+<style>
+  .pn { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; border-block: 1px solid var(--border); padding: 1.2rem 0; margin-top: 2rem; }
+  .lbl { display: block; font-size: .72rem; color: var(--muted); margin-bottom: .4rem; }
+  a { display: block; border-left: 4px solid var(--border); padding-left: .9rem; color: var(--text); font-weight: 600; font-size: .85rem; line-height: 1.45; }
+  a:hover { color: var(--accent); border-color: var(--accent); }
+  @media (max-width: 560px) { .pn { grid-template-columns: 1fr; } }
+</style>

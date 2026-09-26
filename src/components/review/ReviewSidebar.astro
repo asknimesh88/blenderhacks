@@ -1,0 +1,36 @@
+---
+// Sidebar score card: average score, breakdown, summary, pros/cons, where to buy.
+import ScoreBars from './ScoreBars.astro';
+import StoreList from './StoreList.astro';
+import ProsCons from './ProsCons.astro';
+import { overallScore, storeUrl } from '../../lib/review';
+import type { Post } from '../../lib/posts';
+interface Props { review: NonNullable<Post['data']['review']>; }
+const { review } = Astro.props;
+const score = overallScore(review.criteria, review.score);
+const [first] = review.stores;
+---
+<section class="card">
+  <div class="head"><span>Average Score</span><span class="num">{score}<sup>%</sup></span></div>
+  <div class="body">
+    <ScoreBars criteria={review.criteria} />
+    <p class="summary">{review.summary}</p>
+    <ProsCons pros={review.pros} cons={review.cons} stacked />
+  </div>
+  <div class="buy">
+    <p class="bp"><span>Where to buy</span><a href="/about/#how-we-score" class="how">How we score</a></p>
+    <a class="btn btn-green" href={storeUrl(first, review.product)} rel="sponsored nofollow noopener" target="_blank">Check price on {first.name}</a>
+    {review.stores.length > 1 && <StoreList stores={review.stores} product={review.product} compact />}
+  </div>
+</section>
+<style>
+  .card { border: 1px solid var(--border); border-bottom: 3px solid var(--score); }
+  .head { display: flex; justify-content: space-between; align-items: center; background: var(--score); color: #fff; padding: 1rem 1.1rem; font-size: 1.15rem; font-weight: 500; }
+  .num { font-size: 1.35rem; font-weight: 700; }
+  .num sup { font-size: .6em; }
+  .body { padding: 1.4rem 1.1rem .4rem; }
+  .summary { font-size: .8rem; margin: .8rem 0 1.2rem; }
+  .buy { border-top: 1px solid var(--border); padding: 1rem 1.1rem 1.1rem; }
+  .bp { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 .7rem; color: var(--text); font-weight: 500; }
+  .how { font-size: .7rem; font-weight: 400; }
+</style>

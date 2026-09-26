@@ -1,0 +1,15 @@
+---
+import { toStars } from '../lib/review';
+interface Props { percent: number; size?: string; }
+const { percent, size = '.85rem' } = Astro.props;
+const stars = toStars(percent);
+---
+<span class="stars" style={`font-size:${size}`} role="img" aria-label={`Rated ${stars} out of 5`}>
+  <span class="empty" aria-hidden="true">★★★★★</span>
+  <span class="full" aria-hidden="true" style={`width:${(stars / 5) * 100}%`}>★★★★★</span>
+</span>
+<style>
+  .stars { position: relative; display: inline-block; line-height: 1; letter-spacing: .05em; white-space: nowrap; }
+  .empty { color: #ddd; }
+  .full { position: absolute; inset: 0 auto 0 0; overflow: hidden; color: var(--star); }
+</style>

@@ -1,0 +1,20 @@
+---
+// Drop <RelatedPosts /> anywhere inside a post to show two related articles.
+import { getPosts, postUrl, relatedPosts } from '../lib/posts';
+const posts = await getPosts();
+const current = posts.find((p) => Astro.url.pathname === postUrl(p));
+const related = current ? relatedPosts(posts, current, 2) : [];
+---
+{related.length > 0 && (
+  <aside class="related">
+    <p class="section-title">Related Posts</p>
+    <div class="grid">{related.map((p) => <a href={postUrl(p)}>{p.data.title}</a>)}</div>
+  </aside>
+)}
+<style>
+  .related { margin: 1.5rem 0 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  a { color: var(--text); font-weight: 600; font-size: .85rem; line-height: 1.45; }
+  a:hover { color: var(--accent); }
+  @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+</style>

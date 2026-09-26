@@ -1,0 +1,37 @@
+---
+// Small "Next post" card that slides in near the end of the article.
+import Thumb from './Thumb.astro';
+import { postUrl, type Post } from '../lib/posts';
+interface Props { posts: Post[]; }
+const { posts } = Astro.props;
+---
+{posts.length > 0 && (
+  <aside class="npp" id="npp" hidden>
+    <button type="button" class="close" aria-label="Close">×</button>
+    {posts.map((p) => (
+      <a href={postUrl(p)}><Thumb post={p} width="3.6rem" /><span>{p.data.title}</span></a>
+    ))}
+    <span class="tag">Next Post</span>
+  </aside>
+)}
+<script>
+  const box = document.getElementById('npp');
+  if (box) {
+    let dismissed = false;
+    const onScroll = () => {
+      const past = scrollY + innerHeight > document.body.scrollHeight * 0.6;
+      box.hidden = dismissed || !past;
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    box.querySelector('.close')?.addEventListener('click', () => { dismissed = true; box.hidden = true; });
+  }
+</script>
+<style>
+  .npp { position: fixed; right: 1rem; bottom: 1rem; width: 17rem; background: #fff; box-shadow: 0 4px 25px rgb(0 0 0 / .18); padding: 1rem 1rem .5rem; z-index: 20; }
+  .npp[hidden] { display: none; }
+  a { display: flex; gap: .7rem; color: var(--text); font-size: .75rem; line-height: 1.4; margin-bottom: .8rem; }
+  a:hover { color: var(--accent); }
+  .close { position: absolute; top: .2rem; right: .4rem; border: 0; background: none; font-size: 1.1rem; cursor: pointer; color: var(--muted); }
+  .tag { position: absolute; right: -.3rem; bottom: -.6rem; background: var(--accent); color: #fff; font-size: .6rem; font-weight: 700; padding: .15rem .5rem; text-transform: uppercase; }
+  @media (max-width: 560px) { .npp { display: none !important; } }
+</style>
