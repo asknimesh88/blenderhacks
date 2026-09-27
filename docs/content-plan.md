@@ -28,9 +28,9 @@ Target: **2 posts a week**. Publish 10–15 before applying to Amazon Associates
 17. How to make your blender quieter
 
 ## Recipes
-18. 5-minute green smoothie that doesn't taste like grass
-19. High-protein breakfast smoothies (no protein powder)
-20. Frozen coffee drinks at home
+18. ✅ 5-minute green smoothie that doesn't taste like grass
+19. ✅ High-protein breakfast smoothies (no protein powder)
+20. ✅ Frozen coffee drinks at home
 21. Blender pancake and crêpe batter
 22. Blender salsa and sauces (pesto, hummus, romesco)
 23. Healthy "nice cream" (banana soft-serve)
