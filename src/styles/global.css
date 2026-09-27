@@ -19,6 +19,8 @@
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+.prose :is(h2, h3) { scroll-margin-top: 1.25rem; }
 body {
   margin: 0;
   background: var(--bg);

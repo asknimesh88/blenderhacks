@@ -12,8 +12,8 @@ export async function getStaticPaths() {
   return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
 }
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 // Available in every post without an import.
 const components = { ProductBox, AmazonButton, RelatedPosts, PullQuote };
 ---
-<Post post={post}><Content components={components} /></Post>
+<Post post={post} headings={headings}><Content components={components} /></Post>
