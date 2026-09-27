@@ -14,7 +14,7 @@ const tiles = order.map((i) => posts[i]);
       <article class={`tile t${i + 1}`}>
         {p.data.hero
           ? <img src={p.data.hero.src} alt="" loading={i < 3 ? 'eager' : 'lazy'} />
-          : <span class="ph" aria-hidden="true"><img src="/favicon.svg" alt="" /></span>}
+          : <span class="ph" aria-hidden="true"><img src="/logo.svg" alt="" /></span>}
         <div class="over">
           <a class="cat" href={`/category/${categorySlug(p.data.category)}/`}>{p.data.category}</a>
           <h2><a href={postUrl(p)}>{p.data.title}</a></h2>

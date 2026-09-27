@@ -14,7 +14,7 @@ export const SITE = {
 export const AUTHOR = {
   name: 'BlenderHacks Editorial',
   bio: 'We research blenders so you don\'t have to: we compare specs, warranties and thousands of owner reviews, and write practical guides for getting more out of the blender you already have.',
-  avatar: '/favicon.svg',
+  avatar: '/logo.svg',
 };
 
 export const CATEGORIES = [
