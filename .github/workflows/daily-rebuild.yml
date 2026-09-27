@@ -1,0 +1,27 @@
+# Rebuilds the site on Cloudflare Pages every morning so posts scheduled for
+# that day (a future pubDate) go live automatically.
+#
+# Setup (once): in Cloudflare, Workers & Pages → blenderhacks → Settings →
+# Builds → Deploy hooks → add a hook for the production branch, then save its
+# URL in GitHub → Settings → Secrets and variables → Actions as
+# CLOUDFLARE_DEPLOY_HOOK.
+name: Daily rebuild
+
+on:
+  schedule:
+    - cron: '17 6 * * *' # 06:17 UTC daily
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare Pages build
+        env:
+          HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::warning::CLOUDFLARE_DEPLOY_HOOK secret is not set; skipping."
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK"

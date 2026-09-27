@@ -2,9 +2,18 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 export type Post = CollectionEntry<'blog'>;
 
-/** Published posts, newest first. Drafts show up only in `npm run dev`. */
+/**
+ * Published posts, newest first. Drafts and scheduled posts (pubDate in the
+ * future) are hidden until their date; both show up in `npm run dev`.
+ * The site rebuilds daily (.github/workflows/daily-rebuild.yml) so scheduled
+ * posts go live on their day.
+ */
 export async function getPosts() {
-  const posts = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
+  const now = Date.now();
+  const posts = await getCollection(
+    'blog',
+    ({ data }) => import.meta.env.DEV || (!data.draft && data.pubDate.valueOf() <= now),
+  );
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 

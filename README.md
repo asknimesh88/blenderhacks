@@ -97,6 +97,20 @@ No imports are needed: `ProductBox`, `AmazonButton`, `RelatedPosts` and `PullQuo
 
 **Author:** set the byline name, bio and avatar in `AUTHOR` in `src/config.ts`.
 
+## Scheduling posts
+
+New posts go into a queue: give a post a **future `pubDate`** and it stays hidden (homepage, lists, RSS, sitemap) until that date. The site rebuilds every morning via `.github/workflows/daily-rebuild.yml`, so scheduled posts appear on their day with no manual step.
+
+- `draft: true` hides a post indefinitely; a future `pubDate` hides it until that day.
+- `npm run dev` shows drafts and scheduled posts so you can preview them.
+- The publishing calendar lives in `docs/content-plan.md`.
+
+One-time setup for the daily rebuild:
+
+1. Cloudflare: **Workers & Pages → blenderhacks → Settings → Builds → Deploy hooks → Add deploy hook**, pick the production branch, and copy the URL.
+2. GitHub: **Settings → Secrets and variables → Actions → New repository secret**, name it `CLOUDFLARE_DEPLOY_HOOK`, and paste the URL.
+3. Optional check: GitHub **Actions → Daily rebuild → Run workflow** should start a new Cloudflare deployment.
+
 ## Deploying to blenderhacks.com (Cloudflare Pages)
 
 The site is hosted on Cloudflare Pages, connected to this GitHub repo. Every push to the production branch rebuilds and republishes it.

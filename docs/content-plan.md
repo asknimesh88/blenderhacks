@@ -2,7 +2,14 @@
 
 Focus on **specific questions real people search for**. They're easier to rank for than "best blender" lists, which big sites dominate. Every post should end with a natural product link where one fits.
 
-Target: **2 posts a week**. Publish 10–15 before applying to Amazon Associates.
+Target: **3 posts a week** (Mon/Wed/Fri). New posts are written ahead and **scheduled** with a future `pubDate`; the daily rebuild publishes them on their day.
+
+## Publishing queue
+
+| Date | Post | Status |
+|---|---|---|
+| — | (next batches are added here) | — |
+ Publish 10–15 before applying to Amazon Associates.
 
 ✅ = drafted
 
