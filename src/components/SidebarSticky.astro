@@ -66,7 +66,7 @@ const showGuide = postUrl(current) !== guide;
   }
 </script>
 <style>
-  .sticky { position: sticky; top: 1.5rem; display: flex; flex-direction: column; gap: 1.6rem; }
+  .sticky { position: sticky; top: calc(var(--header-h) + 1.25rem); display: flex; flex-direction: column; gap: 1.6rem; }
   .progress { border: 1px solid #e5e7eb; border-radius: 12px; padding: .9rem 1rem 1rem; background: #fff; box-shadow: 0 4px 16px rgb(17 24 39 / .05); }
   .row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .55rem; font-size: .72rem; }
   .lbl { font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text); }
