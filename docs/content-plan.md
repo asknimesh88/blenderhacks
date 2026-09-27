@@ -8,7 +8,9 @@ Target: **3 posts a week** (Mon/Wed/Fri). New posts are written ahead and **sche
 
 | Date | Post | Status |
 |---|---|---|
-| — | (next batches are added here) | — |
+| 2026-09-28 | Blender Pancakes: Fluffy Pancake and Crêpe Batter in 2 Minutes | Scheduled |
+| 2026-09-30 | Blender Salsa and Sauces: 7 Easy Recipes You Can Make in 5 Minutes | Scheduled |
+| 2026-10-02 | How to Make Nice Cream in a Blender (Healthy Banana Soft Serve) | Scheduled |
  Publish 10–15 before applying to Amazon Associates.
 
 ✅ = drafted
@@ -38,9 +40,9 @@ Target: **3 posts a week** (Mon/Wed/Fri). New posts are written ahead and **sche
 18. ✅ 5-minute green smoothie that doesn't taste like grass
 19. ✅ High-protein breakfast smoothies (no protein powder)
 20. ✅ Frozen coffee drinks at home
-21. Blender pancake and crêpe batter
-22. Blender salsa and sauces (pesto, hummus, romesco)
-23. Healthy "nice cream" (banana soft-serve)
+21. ✅ Blender pancake and crêpe batter
+22. ✅ Blender salsa and sauces (pesto, hummus, romesco)
+23. ✅ Healthy "nice cream" (banana soft-serve)
 24. Smoothie freezer-pack meal prep for the week
 
 ## Buying Guides (research-based: say so in each)
