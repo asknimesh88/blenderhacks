@@ -14,7 +14,10 @@ const year = new Date().getFullYear();
 <footer>
   <div class="container cols">
     <section>
-      <h4>About Us</h4>
+      <a class="brand" href="/" aria-label={`${SITE.name} home`}>
+        <img src="/logo.svg" alt="" width="40" height="40" loading="lazy" />
+        <span>Blender<b>Hacks</b></span>
+      </a>
       <p>{SITE.description} <a href="/about/">Learn more</a>.</p>
       <p class="small">{AMAZON_DISCLOSURE} <a href="/affiliate-disclosure/">Affiliate disclosure</a>.</p>
     </section>
@@ -33,7 +36,7 @@ const year = new Date().getFullYear();
     </section>
   </div>
   <div class="container bottom">
-    <p>© {year} {SITE.name}. All rights reserved.</p>
+    <p>© {year} <span class="name">{SITE.name}</span>. All rights reserved.</p>
     <nav aria-label="Footer">
       <a href="/about/">About</a>
       <a href="/affiliate-disclosure/">Affiliate Disclosure</a>
@@ -43,21 +46,40 @@ const year = new Date().getFullYear();
   </div>
 </footer>
 <style>
-  footer { background: var(--bg-soft); font-size: .82rem; margin-top: 1rem; }
-  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 2rem 3rem; padding-block: 3rem 2rem; }
-  h4 { color: var(--accent); font-size: .95rem; font-weight: 600; margin: 0 0 1rem; }
-  p { margin: 0 0 .8rem; }
-  .small { font-size: .75rem; color: var(--muted); }
-  .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
-  .tags a { background: #e9e9e9; color: var(--body); font-size: .7rem; padding: .3rem .6rem; letter-spacing: .03em; }
-  .tags a:hover { background: var(--accent); color: #fff; }
-  .recent { display: flex; gap: .8rem; color: var(--text); margin-bottom: .9rem; align-items: flex-start; }
-  .recent .t { display: block; line-height: 1.4; }
-  .recent:hover .t { color: var(--accent); }
-  .recent .d { display: block; font-size: .7rem; color: var(--muted); margin-top: .2rem; }
-  .bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; border-top: 1px solid #e3e3e3; padding-block: 1.2rem 1.6rem; font-size: .75rem; }
-  .bottom p { margin: 0; color: var(--muted); }
-  .bottom nav { display: flex; flex-wrap: wrap; gap: .3rem 1rem; }
-  .bottom a { color: var(--text); }
-  .bottom a:hover { color: var(--accent); }
+  footer {
+    --f-bg: #0d0d0f; --f-text: #b4b8c0; --f-muted: #7d828c; --f-line: rgb(255 255 255 / .09);
+    --f-red: #ff4b55; /* brighter red for small text on black (readable contrast) */
+    position: relative; background: var(--f-bg); color: var(--f-text); font-size: .85rem; margin-top: 1.5rem;
+  }
+  footer::before { content: ''; display: block; height: 4px; background: linear-gradient(90deg, var(--accent), #ff5a5f, var(--accent)); }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 2.5rem 3.5rem; padding-block: 3.5rem 2.5rem; }
+  h4 {
+    position: relative; margin: .4rem 0 1.4rem; padding-bottom: .7rem;
+    font-family: var(--font-heading); font-weight: 700; font-size: 1.35rem; letter-spacing: .03em; text-transform: uppercase; color: var(--accent);
+  }
+  h4::after { content: ''; position: absolute; left: 0; bottom: 0; width: 2.5rem; height: 3px; border-radius: 2px; background: var(--accent); }
+  .brand { display: inline-flex; align-items: center; gap: .6rem; margin-bottom: 1.1rem; color: #fff; font-size: 1.35rem; font-weight: 500; }
+  .brand b { font-weight: 800; color: var(--f-red); }
+  .brand:hover { color: #fff; }
+  p { margin: 0 0 .9rem; line-height: 1.75; }
+  a { color: var(--f-red); }
+  a:hover { color: #fff; }
+  .small { font-size: .75rem; color: var(--f-muted); }
+  .tags { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .tags a {
+    padding: .38rem .7rem; border-radius: 6px; border: 1px solid var(--f-line); background: rgb(255 255 255 / .04);
+    color: var(--f-text); font-size: .72rem; letter-spacing: .02em; transition: background .15s, border-color .15s, color .15s;
+  }
+  .tags a:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .recent { display: flex; gap: .9rem; color: #fff; margin-bottom: 1.1rem; align-items: flex-start; }
+  .recent :global(.thumb) { border-radius: 8px; }
+  .recent .t { display: block; line-height: 1.45; font-weight: 500; transition: color .15s; }
+  .recent:hover .t { color: var(--f-red); }
+  .recent .d { display: block; font-size: .7rem; color: var(--f-muted); margin-top: .3rem; }
+  .bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .6rem 1rem; border-top: 1px solid var(--f-line); padding-block: 1.3rem 1.7rem; font-size: .75rem; }
+  .bottom p { margin: 0; color: var(--f-muted); }
+  .bottom .name { color: #fff; font-weight: 600; }
+  .bottom nav { display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; }
+  .bottom nav a { color: var(--f-text); }
+  .bottom nav a:hover { color: var(--f-red); }
 </style>
