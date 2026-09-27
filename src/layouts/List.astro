@@ -32,5 +32,5 @@ const href = (n: number) => (n === 1 ? page!.base : `${page!.base}${n}/`);
 </Base>
 <style>
   .layout { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: 2.5rem; align-items: start; }
-  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } }
 </style>

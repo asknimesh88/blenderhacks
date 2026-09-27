@@ -5,6 +5,7 @@ import Thumb from './Thumb.astro';
 import Stars from './Stars.astro';
 import { getPosts, postUrl, type Post } from '../lib/posts';
 import { overallScore } from '../lib/review';
+import SidebarSticky from './SidebarSticky.astro';
 
 // `hot` shows only the scored-products list, titled "Hot Product" (homepage).
 interface Props { current?: Post; hot?: boolean; }
@@ -13,6 +14,13 @@ const posts = (await getPosts()).filter((p) => p.id !== current?.id);
 const recommended = posts.slice(0, 6);
 const reviewed = posts.filter((p) => p.data.review).slice(0, hot ? 6 : 4);
 const [first, ...rest] = recommended;
+// Posts for the pinned "Keep reading" list: same category first, not already listed above.
+const shown = new Set(recommended.map((p) => p.id));
+const next = current
+  ? [...posts.filter((p) => p.data.category === current.data.category), ...posts]
+      .filter((p, i, all) => !shown.has(p.id) && all.indexOf(p) === i)
+      .slice(0, 4)
+  : [];
 ---
 <aside class="sidebar">
   {current?.data.review && <div class="review-card"><ReviewSidebar review={current.data.review} /></div>}
@@ -50,6 +58,7 @@ const [first, ...rest] = recommended;
       })}
     </section>
   )}
+  {current && <SidebarSticky current={current} next={next} />}
 </aside>
 <style>
   .sidebar { display: flex; flex-direction: column; gap: 2.5rem; }

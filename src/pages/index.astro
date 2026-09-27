@@ -51,5 +51,5 @@ const lastPage = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
   .band { background: var(--bg-soft); padding: 1.6rem 0 2rem; margin-bottom: 2.8rem; }
   .blocks { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1rem 2rem; margin-bottom: 1.5rem; }
   .layout { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: 2.5rem; align-items: start; }
-  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } }
 </style>
