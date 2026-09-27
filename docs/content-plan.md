@@ -17,14 +17,14 @@ Target: **2 posts a week**. Publish 10–15 before applying to Amazon Associates
 
 ## Tips & Tricks
 8. ✅ The right order to add smoothie ingredients
-9. Why won't my blender blend? Fixing air pockets and stalls
+9. ✅ Why won't my blender blend? Fixing air pockets and stalls
 10. ✅ Can you crush ice in any blender?
-11. Is it safe to blend hot soup? (countertop vs immersion)
+11. ✅ Is it safe to blend hot soup? (countertop vs immersion)
 12. 12 things you didn't know your blender could do (oat flour, whipped cream, pancake batter…)
 13. How to make nut butter in a blender (and which blenders can handle it)
 14. How to make a smoothie without a banana
 15. How to make a smoothie without liquid: what works and what doesn't
-16. Blender vs. food processor: which to use for what
+16. ✅ Blender vs. food processor: which to use for what
 17. How to make your blender quieter
 
 ## Recipes
