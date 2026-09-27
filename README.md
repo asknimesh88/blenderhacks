@@ -93,7 +93,16 @@ No imports are needed: `ProductBox`, `AmazonButton`, `RelatedPosts` and `PullQuo
 
 **Linking products:** `query="..."` links to an Amazon search. Once you've picked an exact product, use `asin="B0..."` instead. The ASIN is the 10-character code after `/dp/` in the product's Amazon URL.
 
-**Stock photos:** download from [Unsplash](https://unsplash.com) or [Pexels](https://pexels.com). Resize to about 1600px wide, save in `public/images/`, and fill in the `hero` block with the photographer's credit. Don't use a stock photo that shows a specific branded blender as if it were the product you're recommending.
+**Images:** each post has a featured image (`hero` in the front matter) and usually one body image (`<Figure />`). Optimized files live in `public/images/posts/`:
+
+| File | Size | Used for |
+|---|---|---|
+| `{slug}.webp` | 1140×570 | Featured image on the post |
+| `{slug}-600.webp` | 600×300 | Cards, thumbnails, phones |
+| `{slug}-og.jpg` | 1200×630 | Social sharing (Facebook, X, Pinterest) |
+| `{slug}-body.webp` / `{slug}-body-600.webp` | 900×600 / 600×400 | In-article image |
+
+Add `credit`/`creditUrl` for free-site photos (photographer on Unsplash, or the site name such as Foodiesfeed or ISO Republic). Licensed Adobe Stock images need no credit. Always write a descriptive `alt`.
 
 **Author:** set the byline name, bio and avatar in `AUTHOR` in `src/config.ts`.
 

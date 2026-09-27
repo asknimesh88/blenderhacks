@@ -1,6 +1,7 @@
 ---
 // Up to five featured posts: two stacked left, one tall centre, two stacked right.
 import { postUrl, type Post } from '../../lib/posts';
+import { srcset } from '../../lib/images';
 import { categorySlug } from '../../config';
 interface Props { posts: Post[]; }
 const posts = Astro.props.posts.slice(0, 5);
@@ -13,7 +14,7 @@ const tiles = order.map((i) => posts[i]);
     {tiles.map((p, i) => (
       <article class={`tile t${i + 1}`}>
         {p.data.hero
-          ? <img src={p.data.hero.src} alt="" loading={i < 3 ? 'eager' : 'lazy'} />
+          ? <img src={p.data.hero.src} srcset={srcset(p.data.hero.src, 1140)} sizes="(max-width: 760px) 100vw, 40vw" alt="" width="1140" height="570" loading={i < 3 ? 'eager' : 'lazy'} fetchpriority={i === 2 ? 'high' : undefined} />
           : <span class="ph" aria-hidden="true"><img src="/logo.svg" alt="" /></span>}
         <div class="over">
           <a class="cat" href={`/category/${categorySlug(p.data.category)}/`}>{p.data.category}</a>

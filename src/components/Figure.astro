@@ -1,0 +1,20 @@
+---
+// In-article image: <Figure src="/images/posts/slug-body.webp" alt="..." credit="..." creditUrl="..." />
+import { srcset } from '../lib/images';
+interface Props { src: string; alt: string; caption?: string; credit?: string; creditUrl?: string; }
+const { src, alt, caption, credit, creditUrl } = Astro.props;
+---
+<figure class="figure">
+  <img src={src} srcset={srcset(src, 900)} sizes="(max-width: 900px) 100vw, 760px" alt={alt} width="900" height="600" loading="lazy" decoding="async" />
+  {(caption || credit) && (
+    <figcaption>
+      {caption}{caption && credit && ' · '}
+      {credit && <>Photo: {creditUrl ? <a href={creditUrl} rel="noopener" target="_blank">{credit}</a> : credit}</>}
+    </figcaption>
+  )}
+</figure>
+<style>
+  .figure { margin: 2rem 0; clear: both; }
+  img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+  figcaption { font-size: .75rem !important; color: var(--muted); text-align: center; margin-top: .45rem; line-height: 1.5; }
+</style>

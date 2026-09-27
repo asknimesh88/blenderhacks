@@ -8,7 +8,7 @@ const items = Astro.props.headings.filter((h) => h.depth === 2 || h.depth === 3)
 ---
 {items.length > 1 && (
   <nav class="toc" aria-label="Table of contents" data-toc>
-    <button type="button" class="toggle" aria-expanded="false" aria-controls="toc-panel" data-toc-toggle>
+    <button type="button" class="toggle" aria-expanded="false" aria-controls="toc-panel" title="Table of contents" data-toc-toggle>
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
       <span class="label">Contents</span>
     </button>
@@ -73,6 +73,11 @@ const items = Astro.props.headings.filter((h) => h.depth === 2 || h.depth === 3)
   }
   .toggle:hover { background: var(--accent-dark); }
   .open .toggle { visibility: hidden; }
+  /* Between phone and wide desktop the page margin is narrow: icon-only tab so it never covers the article. */
+  @media (min-width: 901px) and (max-width: 1439px) {
+    .toggle { padding: .65rem .6rem; }
+    .label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  }
   .panel {
     position: absolute; left: 0; top: 0; width: 19rem; max-height: calc(100vh - 11rem); overflow-y: auto;
     background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--accent);

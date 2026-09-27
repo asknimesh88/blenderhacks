@@ -5,6 +5,7 @@ import ProductBox from '../../components/ProductBox.astro';
 import AmazonButton from '../../components/AmazonButton.astro';
 import RelatedPosts from '../../components/RelatedPosts.astro';
 import PullQuote from '../../components/PullQuote.astro';
+import Figure from '../../components/Figure.astro';
 import { getPosts } from '../../lib/posts';
 
 export async function getStaticPaths() {
@@ -14,6 +15,6 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
 // Available in every post without an import.
-const components = { ProductBox, AmazonButton, RelatedPosts, PullQuote };
+const components = { ProductBox, AmazonButton, RelatedPosts, PullQuote, Figure };
 ---
 <Post post={post} headings={headings}><Content components={components} /></Post>

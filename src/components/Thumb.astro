@@ -1,12 +1,13 @@
 ---
 // Post thumbnail: the hero photo, or a branded placeholder when there isn't one.
 import type { Post } from '../lib/posts';
+import { small } from '../lib/images';
 interface Props { post: Post; width?: string; ratio?: string; }
 const { post, width = '100%', ratio = '4 / 3' } = Astro.props;
 const hero = post.data.hero;
 ---
 {hero
-  ? <img class="thumb" src={hero.src} alt="" loading="lazy" style={`width:${width};aspect-ratio:${ratio}`} />
+  ? <img class="thumb" src={small(hero.src)} alt="" loading="lazy" decoding="async" width="600" height="300" style={`width:${width};aspect-ratio:${ratio}`} />
   : <span class="thumb ph" aria-hidden="true" style={`width:${width};aspect-ratio:${ratio}`}><img src="/logo.svg" alt="" /></span>}
 <style>
   .thumb { flex: none; object-fit: cover; display: block; }

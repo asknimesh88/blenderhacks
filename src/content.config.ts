@@ -24,13 +24,13 @@ const blog = defineCollection({
     category: z.enum(['Tips & Tricks', 'Cleaning & Care', 'Buying Guides', 'Recipes']),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
-    // Stock photo (e.g. from Unsplash/Pexels) saved under public/images/.
+    // Featured image: /images/posts/{slug}.webp (see src/lib/images.ts).
     hero: z
       .object({
         src: z.string(),
         alt: z.string(),
-        credit: z.string(),
-        creditUrl: z.url(),
+        credit: z.string().optional(), // omitted for licensed stock (Adobe Stock)
+        creditUrl: z.url().optional(),
       })
       .optional(),
     // Adds the score box to the sidebar and "The Review" block after the article.
