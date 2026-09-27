@@ -14,6 +14,7 @@ import { SITE, AUTHOR, AMAZON_DISCLOSURE, categorySlug } from '../config';
 import { getPosts, postUrl, relatedPosts, type Post as PostEntry } from '../lib/posts';
 import { overallScore } from '../lib/review';
 import { tagLinks } from '../lib/links';
+import { extractFaqs } from '../lib/faq';
 
 interface Props { post: PostEntry; }
 const { post } = Astro.props;
@@ -27,8 +28,7 @@ const url = new URL(postUrl(post), SITE.url).toString();
 const catHref = `/category/${categorySlug(category)}/`;
 const body = tagLinks(await Astro.slots.render('default'), SITE.url);
 
-const jsonLd = {
-  '@context': 'https://schema.org',
+const blogPosting = {
   '@type': 'BlogPosting',
   headline: title,
   description,
@@ -39,6 +39,17 @@ const jsonLd = {
   publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
   mainEntityOfPage: url,
 };
+// Posts with a "Frequently asked questions" section also get FAQPage schema.
+const faqs = extractFaqs(post.body);
+const faqPage = faqs.length > 0 && {
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+};
+const jsonLd = { '@context': 'https://schema.org', '@graph': [blogPosting, faqPage].filter(Boolean) };
 ---
 <Base title={title} description={description} image={hero?.src} type="article">
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
