@@ -1,9 +1,10 @@
 ---
-// A product card for roundups and guides: optional score, stars and rating
-// bars, pros/cons and a buy button. No images, and no prices (Amazon's rules).
+// A product card for roundups and guides: optional rank, score, stars and
+// rating bars, pros/cons and a buy button. No images, and no prices (Amazon's rules).
 import AmazonButton from './AmazonButton.astro';
 import Stars from './Stars.astro';
 import ScoreBars from './review/ScoreBars.astro';
+import ProsCons from './review/ProsCons.astro';
 import { overallScore, type Criterion } from '../lib/review';
 
 interface Props {
@@ -24,10 +25,10 @@ const score = criteria.length > 0 || Astro.props.score !== undefined
 ---
 <aside class="product">
   <div class="top">
-    <div>
-      {rank !== undefined && <span class="rank">#{rank}</span>}
+    <div class="info">
+      {rank !== undefined && <span class="rank">#{rank} pick</span>}
       <p class="name">{name}</p>
-      {bestFor && <p class="best">Best for: {bestFor}</p>}
+      {bestFor && <p class="best"><span class="label">Best for</span><span>{bestFor}</span></p>}
       {score !== undefined && <Stars percent={score} />}
     </div>
     {score !== undefined && (
@@ -35,32 +36,50 @@ const score = criteria.length > 0 || Astro.props.score !== undefined
     )}
   </div>
   {criteria.length > 0 && <div class="bars"><ScoreBars criteria={criteria} /></div>}
-  {(pros.length > 0 || cons.length > 0) && (
-    <div class="pc">
-      {pros.length > 0 && <div><p class="h">Pros</p><ul class="pros">{pros.map((p) => <li>{p}</li>)}</ul></div>}
-      {cons.length > 0 && <div><p class="h">Cons</p><ul class="cons">{cons.map((c) => <li>{c}</li>)}</ul></div>}
-    </div>
-  )}
+  {(pros.length > 0 || cons.length > 0) && <div class="pcs"><ProsCons pros={pros} cons={cons} /></div>}
   <slot />
-  <div class="cta"><AmazonButton asin={asin} query={asin ? undefined : query} /></div>
+  <div class="cta">
+    <AmazonButton asin={asin} query={asin ? undefined : query} />
+    <span class="note">Opens Amazon · we may earn a commission</span>
+  </div>
 </aside>
 <style>
-  .product { border: 1px solid var(--border); border-top: 3px solid var(--accent); margin: 1.8rem 0; background: #fff; }
-  .top { display: flex; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.2rem .6rem; }
-  .rank { display: inline-block; background: var(--accent); color: #fff; font-size: .65rem; font-weight: 700; padding: .1rem .45rem; margin-bottom: .4rem; }
-  .name { font-weight: 600; font-size: 1.1rem; color: var(--text); margin: 0 0 .2rem !important; line-height: 1.35; }
-  .best { font-size: .78rem; margin: 0 0 .4rem !important; }
-  .score { flex: none; width: 4.4rem; height: 4.4rem; background: var(--score); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .num { font-size: 1.35rem; font-weight: 700; line-height: 1; }
+  .product {
+    position: relative; margin: 2.25rem 0; background: #fff; font-family: var(--font);
+    border: 1px solid #e5e7eb; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 1px 2px rgb(17 24 39 / .04), 0 10px 30px rgb(17 24 39 / .07);
+  }
+  .product::before { content: ''; display: block; height: 5px; background: linear-gradient(90deg, var(--accent), #ff5a5f); }
+  .top { display: flex; justify-content: space-between; gap: 1rem; padding: 1.3rem 1.4rem .9rem; }
+  .rank {
+    display: inline-block; margin-bottom: .5rem; padding: .2rem .6rem; border-radius: 999px;
+    background: var(--accent); color: #fff; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  }
+  .name {
+    margin: 0 0 .5rem !important; font-family: var(--font-heading); font-weight: 700;
+    font-size: clamp(1.3rem, 2.4vw, 1.6rem) !important; line-height: 1.25 !important; color: var(--heading-color) !important;
+  }
+  .best { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem; margin: 0 0 .5rem !important; font-size: .92rem !important; line-height: 1.45 !important; color: #4b5563 !important; }
+  .label {
+    flex: none; padding: .15rem .55rem; border-radius: 6px; background: #fff1f1; color: var(--accent);
+    font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  }
+  .score {
+    flex: none; width: 4.6rem; height: 4.6rem; border-radius: 12px; background: var(--score); color: #fff;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgb(30 136 229 / .3);
+  }
+  .num { font-size: 1.4rem; font-weight: 700; line-height: 1; }
   .num sup { font-size: .5em; }
   .lbl { font-size: .55rem; text-transform: uppercase; letter-spacing: .08em; margin-top: .45rem; }
-  .bars { padding: .6rem 1.2rem 0; }
-  .pc { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0 1.5rem; background: var(--bg-soft); padding: .9rem 1.2rem .5rem; margin-top: .4rem; }
-  .h { font-size: .78rem; font-weight: 600; text-transform: uppercase; color: var(--text); margin: 0 0 .2rem !important; }
-  ul { list-style: none; margin: 0 0 .6rem !important; padding: 0 !important; }
-  li { position: relative; padding-left: 1.3rem; font-size: .8rem; margin: .25rem 0; }
-  li::before { position: absolute; left: 0; color: var(--muted); }
-  .pros li::before { content: '✓'; }
-  .cons li::before { content: '✕'; }
-  .cta { padding: .9rem 1.2rem 1.1rem; }
+  .bars { padding: .2rem 1.4rem 0; }
+  .pcs { padding: .3rem 1.4rem 0; }
+  .cta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem;
+    margin-top: 1.2rem; padding: 1rem 1.4rem 1.2rem; border-top: 1px solid #f1f2f4; background: #fafafa;
+  }
+  .note { font-size: .72rem; color: var(--muted); line-height: 1.4; }
+  @media (max-width: 560px) {
+    .top, .bars, .pcs, .cta { padding-left: 1rem; padding-right: 1rem; }
+    .cta :global(.amazon) { width: 100%; justify-content: center; }
+  }
 </style>

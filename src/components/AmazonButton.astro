@@ -3,7 +3,18 @@ import { amazonUrl } from '../lib/amazon';
 interface Props { asin?: string; query?: string; label?: string; }
 const { asin, query, label = 'Check price on Amazon' } = Astro.props;
 ---
-<a class="btn amazon" href={amazonUrl({ asin, query })} rel="sponsored nofollow noopener" target="_blank">{label}</a>
+<a class="amazon" href={amazonUrl({ asin, query })} rel="sponsored nofollow noopener" target="_blank">
+  <span>{label}</span>
+  <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M4 10h11m-4-4.5L15.5 10 11 14.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
 <style>
-  .amazon { font-size: .75rem; padding: .6rem 1.1rem; }
+  .amazon {
+    display: inline-flex; align-items: center; gap: .55rem; padding: .8rem 1.3rem; border-radius: 10px;
+    background: var(--accent); color: #fff; font-family: var(--font); font-size: .82rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .04em; line-height: 1;
+    box-shadow: 0 6px 16px rgb(215 20 30 / .25); transition: transform .15s, box-shadow .15s, background .15s;
+  }
+  .amazon:hover { background: var(--accent-dark); color: #fff; transform: translateY(-1px); box-shadow: 0 10px 22px rgb(215 20 30 / .3); }
+  .amazon svg { transition: transform .15s; }
+  .amazon:hover svg { transform: translateX(3px); }
 </style>

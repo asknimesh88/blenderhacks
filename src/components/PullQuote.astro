@@ -1,10 +1,48 @@
 ---
-// Large centered quote between two short rules.
+// Highlighted takeaway: large quote mark, bold text on a soft tinted card,
+// plus a one-click "share this tip" link.
+import { SITE } from '../config';
+const html = await Astro.slots.render('default');
+const text = html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+const url = new URL(Astro.url.pathname, SITE.url).toString();
+const share = `https://x.com/intent/post?text=${encodeURIComponent(`“${text}”`)}&url=${encodeURIComponent(url)}`;
 ---
-<figure class="pq"><blockquote><slot /></blockquote></figure>
+<figure class="pq">
+  <svg class="mark" viewBox="0 0 48 36" aria-hidden="true"><path fill="currentColor" d="M0 36V22.5C0 9.9 6.6 2.4 19.8 0l2 4.8C14.5 6.7 10.9 10.6 10.4 17H20v19H0zm26.9 0V22.5C26.9 9.9 33.5 2.4 46.7 0l2 4.8c-7.3 1.9-10.9 5.8-11.4 12.2h9.6v19H26.9z"/></svg>
+  <blockquote set:html={html} />
+  <figcaption>
+    <span class="rule" aria-hidden="true"></span>
+    <span class="brand">BlenderHacks tip</span>
+    <a class="share" href={share} target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M17.8 3h3l-6.6 7.6L22 21h-6.1l-4.8-6.2L5.6 21h-3l7.1-8.1L2.2 3h6.2l4.3 5.7zm-1 16.2h1.7L7.3 4.7H5.5z"/></svg>
+      Share this tip
+    </a>
+  </figcaption>
+</figure>
 <style>
-  .pq { margin: 2.5rem auto; max-width: 30rem; text-align: center; }
-  .pq::before, .pq::after { content: ''; display: block; width: 2.2rem; height: 1px; background: #ccc; margin: 0 auto; }
-  blockquote { margin: 1.2rem 0; padding: 0; background: none; border: 0; font-size: 1.2rem; font-style: italic; font-weight: 300; line-height: 1.6; color: var(--muted); }
-  blockquote :global(p) { margin: 0; }
+  .pq {
+    position: relative; margin: 2.75rem 0; padding: 2.4rem 2.2rem 1.6rem 2.2rem;
+    background: linear-gradient(135deg, #fff5f5 0%, #fff 70%); border: 1px solid #fde2e2;
+    border-left: 5px solid var(--accent); border-radius: 12px;
+    box-shadow: 0 8px 28px rgb(215 20 30 / .07);
+  }
+  .mark { position: absolute; top: -1.1rem; left: 1.6rem; width: 3rem; height: 2.25rem; color: var(--accent); background: #fff; padding: 0 .4rem; }
+  .pq blockquote {
+    margin: 0; padding: 0; border: 0; background: none;
+    font-family: var(--font-title); font-weight: 800; font-style: normal;
+    font-size: clamp(1.35rem, 2.6vw, 1.75rem); line-height: 1.35; letter-spacing: -.01em; color: var(--title-color);
+  }
+  .pq blockquote :global(p) { margin: 0; font: inherit; color: inherit; }
+  .pq figcaption { display: flex; justify-content: flex-start; text-align: left; color: var(--muted); align-items: center; gap: .75rem; flex-wrap: wrap; margin-top: 1.25rem; font-family: var(--font); font-size: .75rem; line-height: 1.4; }
+  .rule { width: 2rem; height: 3px; background: var(--accent); border-radius: 2px; }
+  .brand { text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--accent); }
+  .share {
+    margin-left: auto; display: inline-flex; align-items: center; gap: .4rem;
+    padding: .4rem .8rem; border-radius: 999px; background: var(--heading-color); color: #fff; font-weight: 600;
+  }
+  .share:hover { background: #000; color: #fff; }
+  @media (max-width: 560px) {
+    .pq { padding: 2.1rem 1.2rem 1.3rem; }
+    .share { margin-left: 0; }
+  }
 </style>

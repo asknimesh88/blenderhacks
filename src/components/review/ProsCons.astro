@@ -1,29 +1,70 @@
 ---
+// Pros and cons as two tinted cards (green / red) with icon badges.
+// `stacked` renders a compact single-column version for the sidebar.
 interface Props { pros: string[]; cons: string[]; stacked?: boolean; }
 const { pros, cons, stacked = false } = Astro.props;
 ---
-<div class:list={['pc', { stacked }]}>
-  {pros.length > 0 && (
-    <div><p class="h">Pros</p><ul class="pros">{pros.map((p) => <li>{p}</li>)}</ul></div>
-  )}
-  {cons.length > 0 && (
-    <div><p class="h">Cons</p><ul class="cons">{cons.map((c) => <li>{c}</li>)}</ul></div>
-  )}
-</div>
+{(pros.length > 0 || cons.length > 0) && (
+  <div class:list={['pc', { stacked }]}>
+    {pros.length > 0 && (
+      <section class="card pros" aria-label="Pros">
+        <p class="head">
+          <span class="badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M2 21h3V10H2v11zm19.8-9.1c.1-.3.2-.6.2-.9v-1c0-1.1-.9-2-2-2h-6.3l1-4.6v-.3c0-.4-.2-.8-.4-1.1L13.2 1 7.6 6.6c-.4.4-.6.9-.6 1.4v11c0 1.1.9 2 2 2h9c.8 0 1.5-.5 1.8-1.2l2-7.9z"/></svg>
+          </span>
+          Pros
+        </p>
+        <ul>
+          {pros.map((p) => (
+            <li><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{p}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+    {cons.length > 0 && (
+      <section class="card cons" aria-label="Cons">
+        <p class="head">
+          <span class="badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M22 3h-3v11h3V3zM2.2 12.1c-.1.3-.2.6-.2.9v1c0 1.1.9 2 2 2h6.3l-1 4.6v.3c0 .4.2.8.4 1.1l1.1 1 5.6-5.6c.4-.4.6-.9.6-1.4V5c0-1.1-.9-2-2-2H6c-.8 0-1.5.5-1.8 1.2l-2 7.9z"/></svg>
+          </span>
+          Cons
+        </p>
+        <ul>
+          {cons.map((c) => (
+            <li><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 4.5l7 7m0-7l-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span>{c}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
+)}
 <style>
-  .pc { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); background: var(--bg-soft); }
-  .pc > div { padding: 1.2rem 1.4rem; }
-  .pc > div + div { border-left: 1px solid #e6e6e6; }
-  .stacked { display: block; background: none; }
-  .stacked > div { padding: 0 0 .8rem; }
-  .stacked > div + div { border: 0; }
-  .h { font-size: .95rem; font-weight: 600; text-transform: uppercase; color: var(--text); margin: 0 0 .5rem; }
-  .stacked .h { font-weight: 400; font-size: .9rem; }
-  ul { list-style: none; margin: 0; padding: 0; }
-  li { position: relative; padding-left: 1.4rem; margin: .35rem 0; font-size: .82rem; color: var(--text); }
-  .stacked li { color: var(--body); font-size: .78rem; }
-  li::before { position: absolute; left: 0; top: 0; color: var(--muted); font-size: .8rem; }
-  .pros li::before { content: '✓'; }
-  .cons li::before { content: '✕'; }
-  @media (max-width: 480px) { .pc > div + div { border-left: 0; border-top: 1px solid #e6e6e6; } }
+  .pc { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; font-family: var(--font); }
+  .card { border-radius: 12px; padding: 1.1rem 1.25rem 1.2rem; border: 1px solid; }
+  .pros { --c: #15803d; --soft: #dcfce7; background: #f0fdf4; border-color: #bbf7d0; }
+  .cons { --c: #b91c1c; --soft: #fee2e2; background: #fef2f2; border-color: #fecaca; }
+  .head {
+    display: flex; align-items: center; gap: .55rem; margin: 0 0 .8rem !important;
+    font-family: var(--font-heading); font-weight: 700; font-size: 1.15rem !important; line-height: 1.2 !important;
+    text-transform: uppercase; letter-spacing: .06em; color: var(--c) !important;
+  }
+  .badge { width: 2rem; height: 2rem; border-radius: 50%; background: var(--c); color: #fff; display: grid; place-items: center; flex: none; }
+  .badge svg { width: 1rem; height: 1rem; }
+  ul { list-style: none; margin: 0 !important; padding: 0 !important; }
+  li {
+    display: flex; gap: .6rem; align-items: flex-start; margin: 0 !important; padding: .45rem 0;
+    font-size: .95rem; line-height: 1.5; color: #374151;
+  }
+  li + li { border-top: 1px dashed color-mix(in srgb, var(--c) 22%, transparent); }
+  .icon { flex: none; width: 1.3rem; height: 1.3rem; margin-top: .1rem; border-radius: 50%; background: var(--soft); color: var(--c); display: grid; place-items: center; }
+  .icon svg { width: .8rem; height: .8rem; }
+
+  /* Compact sidebar version */
+  .stacked { grid-template-columns: 1fr; gap: .7rem; }
+  .stacked .card { padding: .8rem .9rem .85rem; border-radius: 10px; }
+  .stacked .head { font-size: .9rem !important; margin-bottom: .45rem !important; }
+  .stacked .badge { width: 1.55rem; height: 1.55rem; }
+  .stacked .badge svg { width: .8rem; height: .8rem; }
+  .stacked li { font-size: .78rem; padding: .3rem 0; }
+  .stacked .icon { width: 1.1rem; height: 1.1rem; }
 </style>

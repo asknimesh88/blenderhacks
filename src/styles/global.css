@@ -88,9 +88,29 @@ h1 { font-family: var(--font-title); font-weight: 900; color: var(--title-color)
   display: flow-root; /* sit beside the floated deals box, not under it */
 }
 .prose blockquote p:last-child { margin: 0; }
-.prose table { border-collapse: collapse; width: 100%; font-size: 1rem; line-height: 1.6; display: block; overflow-x: auto; margin: 0 0 1.5rem; }
-.prose th { background: var(--bg-soft); color: var(--text); font-weight: 600; }
-.prose th, .prose td { border: 1px solid var(--border); padding: .55rem .75rem; text-align: left; }
+/* Tables: dark header with a red accent, zebra rows, bold first column */
+.prose table {
+  width: 100%; margin: 2rem 0 2.25rem; border-collapse: separate; border-spacing: 0;
+  font-size: 1rem; line-height: 1.55; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden;
+  box-shadow: 0 1px 2px rgb(17 24 39 / .04), 0 6px 20px rgb(17 24 39 / .06);
+}
+.prose thead th {
+  background: var(--heading-color); color: #fff; font-family: var(--font-heading); font-weight: 700;
+  font-size: .95rem; text-transform: uppercase; letter-spacing: .06em;
+  padding: .9rem 1.1rem; border-bottom: 3px solid var(--accent); text-align: left;
+}
+.prose tbody td { padding: .85rem 1.1rem; color: var(--text-color); border-top: 1px solid #eef0f3; vertical-align: top; }
+.prose tbody tr:first-child td { border-top: 0; }
+.prose tbody tr:nth-child(even) td { background: #f9fafb; }
+.prose tbody tr:hover td { background: #fff5f5; }
+.prose tbody td:first-child { color: var(--title-color); font-weight: 600; }
+.prose td + td, .prose th + th { border-left: 1px solid #eef0f3; }
+.prose thead th + th { border-left-color: rgb(255 255 255 / .12); }
+@media (max-width: 640px) {
+  /* Let wide tables scroll sideways instead of squashing */
+  .prose table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: .92rem; }
+  .prose thead th, .prose tbody td { padding: .7rem .8rem; min-width: 8.5rem; }
+}
 .dropcap > p:first-of-type::first-letter {
   float: left; font-size: 4.6rem; line-height: .85; font-weight: 400;
   color: var(--title-color); margin: .3rem .7rem 0 0;
