@@ -8,11 +8,11 @@ Target: **2 posts a week**. Publish 10–15 before applying to Amazon Associates
 
 ## Cleaning & Care
 1. ✅ How to clean a blender in 60 seconds
-2. How to get rid of a cloudy film in a blender jar
+2. ✅ How to get rid of a cloudy film in a blender jar
 3. ✅ Why does my blender smell like burning? (and when to stop using it)
 4. ✅ How to fix a blender that's leaking from the bottom
 5. Can you sharpen blender blades? (spoiler: usually no, and what to do instead)
-6. How to remove stains from a plastic blender jar
+6. ✅ How to remove stains from a plastic blender jar
 7. Blender gasket: how to clean it and when to replace it
 
 ## Tips & Tricks
@@ -25,7 +25,7 @@ Target: **2 posts a week**. Publish 10–15 before applying to Amazon Associates
 14. ✅ How to make a smoothie without a banana
 15. How to make a smoothie without liquid: what works and what doesn't
 16. ✅ Blender vs. food processor: which to use for what
-17. How to make your blender quieter
+17. ✅ How to make your blender quieter
 
 ## Recipes
 18. ✅ 5-minute green smoothie that doesn't taste like grass
