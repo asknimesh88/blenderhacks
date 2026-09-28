@@ -4,7 +4,7 @@
   --bg-soft: #f5f5f5;
   --text: #212121;
   --body: #53585c;
-  --muted: #a0a0a0;
+  --muted: #6b7280; /* readable grey (≈4.8:1 on white) */
   --border: #eeeeee;
   --accent: #d7141e;       /* red: links, labels, buy buttons */
   --accent-dark: #b10f17;
@@ -64,7 +64,7 @@ main { padding: 1.5rem 0 3.5rem; }
 .btn-green:hover { background: #3fa112; }
 
 .disclosure {
-  font-size: .8rem; color: var(--muted); border-left: 3px solid var(--accent);
+  font-size: .88rem; color: var(--muted); border-left: 3px solid var(--accent);
   padding: .25rem 0 .25rem .8rem; margin: 0 0 1.5rem;
 }
 
@@ -83,7 +83,7 @@ h1 { font-family: var(--font-title); font-weight: 900; color: var(--title-color)
 .prose ul, .prose ol { padding-left: 1.3rem; margin: 0 0 1.25rem; }
 .prose li { margin: .3rem 0; }
 .prose figure { margin: 1.5rem 0; }
-.prose figcaption { font-size: .75rem; color: var(--muted); text-align: center; margin-top: .4rem; }
+.prose figcaption { font-size: .82rem; color: var(--muted); text-align: center; margin-top: .4rem; }
 .prose blockquote {
   margin: 1.5rem 0; padding: .8rem 1.1rem; background: var(--bg-soft);
   border-left: 3px solid var(--accent); color: var(--text);
