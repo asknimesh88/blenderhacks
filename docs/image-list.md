@@ -36,3 +36,20 @@ Name each file after its slug (e.g. `blender-pancake-batter.jpg`) and it goes in
 | 19 | 2026-09-28 | `blender-pancake-batter` | Blender Pancakes: Fluffy Pancake and Crêpe Batter in 2 Minutes | Stack of pancakes with syrup and berries |
 | 20 | 2026-09-30 | `blender-salsa-and-sauces` | Blender Salsa and Sauces: 7 Easy Recipes You Can Make in 5 Minutes | Bowl of salsa with tortilla chips, or jars of sauces |
 | 21 | 2026-10-02 | `nice-cream-in-a-blender` | How to Make Nice Cream in a Blender (Healthy Banana Soft Serve) | Scoops of banana "nice cream" in a bowl with toppings |
+
+## Scheduled: October 2026 (images needed)
+
+One featured image (landscape, ideally 1600px+ wide) and, optionally, one body image per post. Name files after the slug.
+
+| # | Date | Slug (file name) | Post | Featured image idea | Body image idea |
+|---|---|---|---|---|---|
+| 22 | 2026-10-05 | `smoothie-freezer-packs` | Smoothie Freezer Packs: Prep a Week of Smoothies | Bags or jars of frozen fruit and spinach lined up / in a freezer | Hands tipping a frozen pack into a blender |
+| 23 | 2026-10-07 | `can-you-sharpen-blender-blades` | Can You Sharpen Blender Blades? | Close-up of blender blades in an empty jar | Blender blade assembly on a counter |
+| 24 | 2026-10-09 | `blender-wattage-guide` | How Many Watts Does a Blender Need? | A powerful blender mid-blend / control panel close-up | Two or three different blenders side by side |
+| 25 | 2026-10-12 | `how-to-make-a-smoothie-bowl` | How to Make a Thick Smoothie Bowl | Top-down smoothie bowl with granola and fruit toppings | Thick purple/pink base being scooped from a blender |
+| 26 | 2026-10-14 | `blender-gasket-guide` | Blender Gasket Guide | Blender jar base with the blade assembly/collar removed | Hands washing small blender parts in the sink |
+| 27 | 2026-10-16 | `glass-vs-plastic-blender-jar` | Glass vs. Plastic Blender Jars | A glass blender jar next to a plastic one | Close-up of a clear blender jar on a counter |
+| 28 | 2026-10-19 | `homemade-baby-food-in-a-blender` | Homemade Baby Food in a Blender | Small bowls of colorful purées (carrot, peas, sweet potato) | Purée frozen in an ice-cube tray |
+| 29 | 2026-10-21 | `immersion-blender-guide` | What Is an Immersion Blender Used For? | Stick blender in a pot of soup | Stick blender in a tall cup (sauce/mayo) |
+| 30 | 2026-10-23 | `how-long-do-blenders-last` | How Long Do Blenders Last? | An older/used blender on a kitchen counter | Person inspecting or unplugging a blender |
+| 31 | 2026-10-26 | `blender-accessories-worth-buying` | 10 Blender Accessories Worth Buying | Flat-lay: spatula, brush, to-go cups, ice trays around a blender | Tamper or spatula in use with a thick smoothie |

@@ -8,9 +8,19 @@ Target: **3 posts a week** (Mon/Wed/Fri). New posts are written ahead and **sche
 
 | Date | Post | Status |
 |---|---|---|
-| 2026-09-28 | Blender Pancakes: Fluffy Pancake and Crêpe Batter in 2 Minutes | Scheduled |
-| 2026-09-30 | Blender Salsa and Sauces: 7 Easy Recipes You Can Make in 5 Minutes | Scheduled |
+| 2026-09-28 | Blender Pancakes: Fluffy Pancake and Crêpe Batter in 2 Minutes | Published |
+| 2026-09-30 | Blender Salsa and Sauces: 7 Easy Recipes You Can Make in 5 Minutes | Published |
 | 2026-10-02 | How to Make Nice Cream in a Blender (Healthy Banana Soft Serve) | Scheduled |
+| 2026-10-05 | Smoothie Freezer Packs | Scheduled |
+| 2026-10-07 | Can You Sharpen Blender Blades? | Scheduled |
+| 2026-10-09 | How Many Watts Does a Blender Need? | Scheduled |
+| 2026-10-12 | How to Make a Thick Smoothie Bowl | Scheduled |
+| 2026-10-14 | Blender Gasket Guide | Scheduled |
+| 2026-10-16 | Glass vs. Plastic Blender Jars | Scheduled |
+| 2026-10-19 | Homemade Baby Food in a Blender | Scheduled |
+| 2026-10-21 | What Is an Immersion Blender Used For? | Scheduled |
+| 2026-10-23 | How Long Do Blenders Last? | Scheduled |
+| 2026-10-26 | 10 Blender Accessories Worth Buying | Scheduled |
  Publish 10–15 before applying to Amazon Associates.
 
 ✅ = drafted
