@@ -37,7 +37,7 @@ Name each file after its slug (e.g. `blender-pancake-batter.jpg`) and it goes in
 | 20 | 2026-09-30 | `blender-salsa-and-sauces` | Blender Salsa and Sauces: 7 Easy Recipes You Can Make in 5 Minutes | Bowl of salsa with tortilla chips, or jars of sauces |
 | 21 | 2026-10-02 | `nice-cream-in-a-blender` | How to Make Nice Cream in a Blender (Healthy Banana Soft Serve) | Scoops of banana "nice cream" in a bowl with toppings |
 
-## Scheduled: October 2026 (images needed)
+## Scheduled: October 2026 (featured images added; body images optional)
 
 One featured image (landscape, ideally 1600px+ wide) and, optionally, one body image per post. Name files after the slug.
 
