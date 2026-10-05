@@ -22,9 +22,23 @@ export const postUrl = (post: Post) => `/blog/${post.id}/`;
 export const tagSlug = (tag: string) =>
   tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-/** Other posts, same category first, then newest. */
+/** Slugs of posts linked from a post's body text. */
+export const linkedSlugs = (post: Post) =>
+  new Set([...(post.body ?? '').matchAll(/\]\(\/blog\/([^/)#]+)/g)].map((m) => m[1]));
+
+/**
+ * Other posts ranked by relevance: most shared tags, then same category, then
+ * newest. Posts already linked in the body are skipped to avoid duplicate links.
+ */
 export function relatedPosts(posts: Post[], current: Post, count: number) {
-  const others = posts.filter((p) => p.id !== current.id);
-  const same = others.filter((p) => p.data.category === current.data.category);
-  return [...same, ...others.filter((p) => !same.includes(p))].slice(0, count);
+  const tags = new Set(current.data.tags);
+  const linked = linkedSlugs(current);
+  const score = (p: Post) =>
+    p.data.tags.filter((t) => tags.has(t)).length * 2 + (p.data.category === current.data.category ? 1 : 0);
+  return posts
+    .filter((p) => p.id !== current.id && !linked.has(p.id))
+    .map((p, i) => ({ p, s: score(p), i }))
+    .sort((a, b) => b.s - a.s || a.i - b.i)
+    .map(({ p }) => p)
+    .slice(0, count);
 }

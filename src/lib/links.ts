@@ -16,3 +16,13 @@ export function tagLinks(html: string, site: string): string {
     return `<a ${before}href="${href}"${after} target="_blank" rel="${rel}">`;
   });
 }
+
+/**
+ * Turns links to posts that aren't published yet into plain text, so a live post
+ * can mention a scheduled one without a 404. The daily rebuild makes the link
+ * live on the scheduled post's publish day.
+ */
+export function gateLinks(html: string, live: Set<string>): string {
+  return html.replace(/<a ([^>]*?)href="\/blog\/([^"/#?]+)\/?(?:#[^"]*)?"([^>]*)>([\s\S]*?)<\/a>/g,
+    (tag, _b, slug, _a, text) => (live.has(slug) ? tag : text));
+}

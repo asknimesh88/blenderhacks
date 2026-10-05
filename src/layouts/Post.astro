@@ -15,7 +15,7 @@ import type { MarkdownHeading } from 'astro';
 import { SITE, AUTHOR, AMAZON_DISCLOSURE, categorySlug } from '../config';
 import { getPosts, postUrl, relatedPosts, type Post as PostEntry } from '../lib/posts';
 import { overallScore } from '../lib/review';
-import { tagLinks } from '../lib/links';
+import { gateLinks, tagLinks } from '../lib/links';
 import { extractFaqs } from '../lib/faq';
 import { ogImage, srcset } from '../lib/images';
 
@@ -29,7 +29,8 @@ const next = posts[i - 1]; // newer
 const prev = posts[i + 1]; // older
 const url = new URL(postUrl(post), SITE.url).toString();
 const catHref = `/category/${categorySlug(category)}/`;
-const body = tagLinks(await Astro.slots.render('default'), SITE.url);
+const live = new Set(posts.map((p) => p.id));
+const body = gateLinks(tagLinks(await Astro.slots.render('default'), SITE.url), live);
 
 const blogPosting = {
   '@type': 'BlogPosting',
