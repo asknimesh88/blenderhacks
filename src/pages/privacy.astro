@@ -1,7 +1,7 @@
 ---
 import Page from '../layouts/Page.astro';
 import { SITE } from '../config';
-const updated = 'October 11, 2026';
+const updated = 'October 17, 2026';
 ---
 <Page title="Privacy Policy" description="How BlenderHacks handles your information.">
   <p class="muted">Last updated: {updated}</p>
@@ -14,7 +14,7 @@ const updated = 'October 11, 2026';
   <h2>Affiliate links</h2>
   <p>When you click an affiliate link (for example, to Amazon), the destination site may set cookies so it can credit us for any qualifying purchase. Those cookies are governed by that site's own privacy policy, such as <a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ" rel="noopener">Amazon's Privacy Notice</a>.</p>
   <h2>Analytics</h2>
-  <p>We don't currently use analytics. If we add them, we'll update this page to say which service we use and what it collects.</p>
+  <p>We use Google Analytics to understand how visitors use the site, such as which pages are read, how long visits last and roughly where visitors come from (country or region). Google Analytics uses cookies and collects data such as your device and browser type, pages viewed and an approximate location derived from your IP address. We use this information only in aggregate to improve the site. You can read <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">how Google uses data from sites that use its services</a>, and opt out with the <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">Google Analytics opt-out browser add-on</a>.</p>
   <h2>Contact</h2>
   <p>Questions about this policy? Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
 </Page>
